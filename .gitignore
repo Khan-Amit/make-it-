@@ -1,38 +1,36 @@
-# Excel files - Too large for GitHub
+# Excel files - Too large for GitHub, generate locally
 *.xlsx
 *.xls
 *.xlsm
 *.xlsb
 
-# Python
+# Python cache
 __pycache__/
-*.py[cod]
-*$py.class
-*.so
-.Python
-env/
-venv/
-ENV/
-.venv
+*.pyc
+*.pyo
+*.pyd
 
-# IDE
+# Virtual environments
+venv/
+env/
+ENV/
+.venv/
+
+# IDE files
 .vscode/
 .idea/
 *.swp
 *.swo
-*~
 
-# OS generated files
+# OS files
 .DS_Store
-.DS_Store?
-._*
-.Spotlight-V100
-.Trashes
-ehthumbs.db
 Thumbs.db
+Desktop.ini
+
+# Logs
+*.log
 *.tmp
 
-# Project specific
-*.log
+# Backup files
 *.bak
 *.backup
