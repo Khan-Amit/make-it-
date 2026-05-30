@@ -1,0 +1,297 @@
+import pandas as pd
+import openpyxl
+from openpyxl.styles import Font, PatternFill, Alignment
+from docx import Document
+from docx.shared import Inches
+import os
+import shutil
+from datetime import datetime
+
+class IntegratedExcelSystem:
+    def __init__(self, master_file="my_data.xlsx"):
+        self.master_file = master_file
+        self.connected_files = []
+        self.linked_data = {}
+        
+    def create_master_system(self):
+        """Create master Excel file with connection system"""
+        with pd.ExcelWriter(self.master_file, engine='openpyxl') as writer:
+            # Master connection sheet
+            connections_df = pd.DataFrame({
+                'Connected File': [],
+                'File Type': [],
+                'File Path': [],
+                'Last Synced': [],
+                'Status': []
+            })
+            connections_df.to_excel(writer, sheet_name='CONNECTIONS', index=False)
+            
+            # Dashboard sheet
+            dashboard_df = pd.DataFrame({
+                'Metric': ['Total Connections', 'Last Update', 'System Status'],
+                'Value': ['0', datetime.now().strftime("%Y-%m-%d %H:%M:%S"), 'Active']
+            })
+            dashboard_df.to_excel(writer, sheet_name='DASHBOARD', index=False)
+            
+            # Data hub sheet
+            hub_df = pd.DataFrame({'Information': ['Connected files will appear here']})
+            hub_df.to_excel(writer, sheet_name='DATA_HUB', index=False)
+        
+        print(f"✓ Master system created: {self.master_file}")
+        return True
+    
+    def connect_excel_file(self, file_path, connection_name=None):
+        """Connect an external Excel file to the master system"""
+        try:
+            if not os.path.exists(file_path):
+                print(f"✗ File not found: {file_path}")
+                return False
+            
+            # Read the external Excel file
+            external_data = pd.read_excel(file_path)
+            
+            # Load master file
+            with pd.ExcelWriter(self.master_file, engine='openpyxl', mode='a') as writer:
+                sheet_name = connection_name or os.path.basename(file_path).replace('.xlsx', '')
+                external_data.to_excel(writer, sheet_name=sheet_name, index=False)
+                
+                # Update connections sheet
+                connections = pd.read_excel(self.master_file, sheet_name='CONNECTIONS')
+                new_connection = pd.DataFrame({
+                    'Connected File': [os.path.basename(file_path)],
+                    'File Type': ['Excel'],
+                    'File Path': [file_path],
+                    'Last Synced': [datetime.now().strftime("%Y-%m-%d %H:%M:%S")],
+                    'Status': ['Connected']
+                })
+                connections = pd.concat([connections, new_connection], ignore_index=True)
+                
+                # Write back to connections sheet (need to handle properly)
+                with pd.ExcelWriter(self.master_file, engine='openpyxl', mode='a', if_sheet_exists='replace') as writer2:
+                    connections.to_excel(writer2, sheet_name='CONNECTIONS', index=False)
+            
+            self.connected_files.append(file_path)
+            print(f"✓ Connected Excel: {file_path}")
+            return True
+            
+        except Exception as e:
+            print(f"✗ Error connecting Excel: {e}")
+            return False
+    
+    def connect_word_file(self, file_path, extract_text=True):
+        """Connect a Word document to the master system"""
+        try:
+            if not os.path.exists(file_path):
+                print(f"✗ File not found: {file_path}")
+                return False
+            
+            # Read Word document
+            doc = Document(file_path)
+            
+            # Extract content
+            content = []
+            for paragraph in doc.paragraphs:
+                if paragraph.text.strip():
+                    content.append(paragraph.text)
+            
+            # Extract tables if any
+            tables_data = []
+            for table in doc.tables:
+                for row in table.rows:
+                    row_data = [cell.text for cell in row.cells]
+                    tables_data.append(row_data)
+            
+            # Create DataFrame with document content
+            doc_df = pd.DataFrame({
+                'Content Type': ['Paragraph'] * len(content) + ['Table Row'] * len(tables_data),
+                'Content': content + [str(row) for row in tables_data]
+            })
+            
+            # Add to master file
+            sheet_name = os.path.basename(file_path).replace('.docx', '').replace('.doc', '')
+            
+            with pd.ExcelWriter(self.master_file, engine='openpyxl', mode='a') as writer:
+                doc_df.to_excel(writer, sheet_name=f"WORD_{sheet_name}", index=False)
+                
+                # Update connections
+                connections = pd.read_excel(self.master_file, sheet_name='CONNECTIONS')
+                new_connection = pd.DataFrame({
+                    'Connected File': [os.path.basename(file_path)],
+                    'File Type': ['Word'],
+                    'File Path': [file_path],
+                    'Last Synced': [datetime.now().strftime("%Y-%m-%d %H:%M:%S")],
+                    'Status': ['Connected']
+                })
+                connections = pd.concat([connections, new_connection], ignore_index=True)
+                
+                with pd.ExcelWriter(self.master_file, engine='openpyxl', mode='a', if_sheet_exists='replace') as writer2:
+                    connections.to_excel(writer2, sheet_name='CONNECTIONS', index=False)
+            
+            print(f"✓ Connected Word document: {file_path}")
+            print(f"  - Extracted {len(content)} paragraphs")
+            print(f"  - Extracted {len(tables_data)} table rows")
+            return True
+            
+        except Exception as e:
+            print(f"✗ Error connecting Word: {e}")
+            return False
+    
+    def sync_all_connections(self):
+        """Sync all connected files to update data"""
+        print("\n🔄 Syncing all connections...")
+        connections = pd.read_excel(self.master_file, sheet_name='CONNECTIONS')
+        
+        for idx, row in connections.iterrows():
+            file_path = row['File Path']
+            file_type = row['File Type']
+            
+            if os.path.exists(file_path):
+                if file_type == 'Excel':
+                    self.connect_excel_file(file_path)
+                elif file_type == 'Word':
+                    self.connect_word_file(file_path)
+                print(f"  ✓ Synced: {os.path.basename(file_path)}")
+            else:
+                print(f"  ✗ Missing: {os.path.basename(file_path)}")
+        
+        # Update dashboard
+        dashboard_data = {
+            'Metric': ['Total Connections', 'Last Update', 'System Status'],
+            'Value': [len(connections), datetime.now().strftime("%Y-%m-%d %H:%M:%S"), 'Synced']
+        }
+        dashboard_df = pd.DataFrame(dashboard_data)
+        
+        with pd.ExcelWriter(self.master_file, engine='openpyxl', mode='a', if_sheet_exists='replace') as writer:
+            dashboard_df.to_excel(writer, sheet_name='DASHBOARD', index=False)
+        
+        print("✓ Sync completed!")
+        return True
+    
+    def create_report(self, output_file="integrated_report.xlsx"):
+        """Create a comprehensive report from all connected data"""
+        print("\n📊 Generating integrated report...")
+        
+        with pd.ExcelWriter(output_file, engine='openpyxl') as writer:
+            # Get all sheets from master file
+            master_wb = pd.ExcelFile(self.master_file)
+            
+            for sheet_name in master_wb.sheet_names:
+                df = pd.read_excel(self.master_file, sheet_name=sheet_name)
+                df.to_excel(writer, sheet_name=sheet_name, index=False)
+            
+            # Add summary sheet
+            connections = pd.read_excel(self.master_file, sheet_name='CONNECTIONS')
+            summary_data = {
+                'Total Connected Files': [len(connections)],
+                'Excel Files': [len(connections[connections['File Type'] == 'Excel'])],
+                'Word Files': [len(connections[connections['File Type'] == 'Word'])],
+                'Report Generated': [datetime.now().strftime("%Y-%m-%d %H:%M:%S")]
+            }
+            summary_df = pd.DataFrame(summary_data)
+            summary_df.to_excel(writer, sheet_name='REPORT_SUMMARY', index=False)
+        
+        print(f"✓ Report created: {output_file}")
+        return output_file
+    
+    def search_across_files(self, keyword):
+        """Search for keyword across all connected files"""
+        print(f"\n🔍 Searching for: '{keyword}'")
+        results = []
+        
+        master_wb = pd.ExcelFile(self.master_file)
+        
+        for sheet_name in master_wb.sheet_names:
+            if sheet_name not in ['CONNECTIONS', 'DASHBOARD']:
+                try:
+                    df = pd.read_excel(self.master_file, sheet_name=sheet_name)
+                    # Search in all columns
+                    mask = df.astype(str).apply(lambda x: x.str.contains(keyword, case=False, na=False)).any(axis=1)
+                    matches = df[mask]
+                    
+                    if not matches.empty:
+                        results.append({
+                            'Sheet': sheet_name,
+                            'Matches': len(matches),
+                            'Data': matches
+                        })
+                        print(f"  ✓ Found {len(matches)} matches in {sheet_name}")
+                except:
+                    pass
+        
+        return results
+
+def main():
+    print("=" * 60)
+    print("📊 INTEGRATED EXCEL SYSTEM")
+    print("Connect Excel & Word Files")
+    print("=" * 60)
+    
+    # Initialize system
+    system = IntegratedExcelSystem("my_data.xlsx")
+    
+    # Create master system
+    print("\n1. Creating master system...")
+    system.create_master_system()
+    
+    # Example: Connect Excel files (replace with your file paths)
+    print("\n2. Connecting files...")
+    
+    # Example Excel connection
+    # system.connect_excel_file("C:/path/to/your/file.xlsx", "Sales_Data")
+    
+    # Example Word connection  
+    # system.connect_word_file("C:/path/to/your/document.docx")
+    
+    # Demo: Create sample files to connect
+    print("\n📝 Creating sample files for demo...")
+    
+    # Create sample Excel
+    sample_excel = pd.DataFrame({
+        'Product': ['Laptop', 'Mouse', 'Keyboard'],
+        'Sales': [1000, 200, 150],
+        'Region': ['North', 'South', 'East']
+    })
+    sample_excel.to_excel("sample_sales.xlsx", index=False)
+    system.connect_excel_file("sample_sales.xlsx", "Sales_Data")
+    
+    # Create sample Word
+    from docx import Document
+    doc = Document()
+    doc.add_heading('Sample Document', 0)
+    doc.add_paragraph('This is connected to the Excel system.')
+    doc.add_paragraph('Important data here.')
+    doc.save("sample_document.docx")
+    system.connect_word_file("sample_document.docx")
+    
+    # Sync all connections
+    print("\n3. Syncing all connections...")
+    system.sync_all_connections()
+    
+    # Generate report
+    print("\n4. Generating integrated report...")
+    system.create_report("integrated_report.xlsx")
+    
+    # Search demo
+    print("\n5. Searching across all files...")
+    results = system.search_across_files("important")
+    
+    print("\n" + "=" * 60)
+    print("✅ SYSTEM READY!")
+    print("=" * 60)
+    print(f"📁 Master file: {os.path.abspath('my_data.xlsx')}")
+    print(f"📊 Report file: {os.path.abspath('integrated_report.xlsx')}")
+    print("\n📌 To connect your own files, use:")
+    print("   system.connect_excel_file('your_file.xlsx')")
+    print("   system.connect_word_file('your_document.docx')")
+
+if __name__ == "__main__":
+    # Install required packages
+    try:
+        import pandas, openpyxl, docx
+    except ImportError:
+        print("Installing required packages...")
+        os.system("pip install pandas openpyxl python-docx")
+        print("✓ Packages installed. Run the program again.")
+        exit()
+    
+    main()
