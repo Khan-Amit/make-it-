@@ -1,79 +1,44 @@
-SOVEREIGN PROPRIETARY SOFTWARE LICENSE
-Version 1.0
+
+---
+
+## 📁 **FILE 5: `LICENSE`**
+
+```text
+SOVEREIGN PROPRIETARY LICENSE
+
 Copyright © 2026 Seliim Ahmed. All Rights Reserved.
 
-AUTHOR / OWNER:
-Seliim Ahmed
+This software is the exclusive intellectual property of Seliim Ahmed.
+
+## PERMITTED USES:
+- Personal, non-commercial, offline use only
+- Running the software on your own computer
+- Using the generated Excel files for your own purposes
+
+## PROHIBITED USES:
+- Redistribution, resale, or sublicensing
+- Modification, reverse engineering, or derivative works
+- Removal of copyright or license notices
+- Commercial use without written permission
+- Uploading to public servers or sharing platforms
+- Using to train AI or machine learning models
+- Sharing source code publicly
+
+## COMMERCIAL LICENSE:
+For commercial use, business use, or redistribution:
 Contact: seliim.ahmed@gmail.com
 
-----------------------------------------------------------------------
+## PRICING:
+- Individual/Personal License: $369 USD (One-time)
+- Early Bird (First 50): $199 USD
+- Commercial License: Contact for pricing
 
-1. DEFINITION OF "SOFTWARE"
-The "Software" includes, without limitation:
-   a) All source code, object code, binary code, scripts, and executables;
-   b) All documentation, user manuals, technical specifications, and diagrams;
-   c) All designs, algorithms, flowcharts, logic, and data structures;
-   d) All audio, visual, or interactive elements;
-   e) All updates, patches, modifications, and derivative works created by any person, regardless of authorization.
+## ENFORCEMENT:
+Unauthorized access, copying, or distribution will be pursued to the fullest extent of the law.
 
-2. NO PERMISSION WITHOUT WRITTEN CONSENT
-No person, entity, organization, government, agency, corporation, partnership, trust, estate, or any other legal or natural person (collectively "You" or "Your") may access, view, download, install, execute, copy, modify, merge, publish, distribute, sublicense, sell, rent, lease, lend, create derivative works of, reverse engineer, decompile, disassemble, or otherwise use the Software in any manner whatsoever, without the express prior written consent of Seliim Ahmed.
+## NO WARRANTY:
+This software is provided "AS IS" without warranty of any kind.
 
-3. WRITTEN CONSENT REQUIREMENTS
-Written consent, if granted, must:
-   a) Be signed by Seliim Ahmed in ink (wet signature);
-   b) Be notarized by a licensed notary public;
-   c) Be registered with a court of competent jurisdiction;
-   d) Specify the exact permitted use, duration, and scope;
-   e) Explicitly state that no other rights are granted.
-
-Any consent not meeting all of the above requirements is void ab initio (void from the beginning).
-
-4. NO IMPLIED RIGHTS
-No license is granted by implication, estoppel, custom, usage, trade practice, or any other theory. The fact that the Software is publicly accessible (e.g., on GitHub) does not constitute permission to use it. Access does not equal license.
-
-5. PROHIBITED ACTIONS
-Without limiting the generality of the foregoing, You are expressly prohibited from:
-   a) Using the Software to train, improve, or validate any artificial intelligence, machine learning model, or large language model;
-   b) Incorporating the Software, or any portion thereof, into any product or service offered to third parties;
-   c) Using the Software in any manner that could compete with, harm, or disparage Seliim Ahmed;
-   d) Removing or altering any copyright, trademark, or other proprietary notice;
-   e) Using the Software for any unlawful purpose or in any jurisdiction where this license is unenforceable.
-
-6. DISCLAIMER OF WARRANTIES
-THE SOFTWARE IS PROVIDED "AS IS" AND "WITH ALL FAULTS." SELIIM AHMED MAKES NO REPRESENTATIONS OR WARRANTIES OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, TITLE, NON‑INFRINGEMENT, SECURITY, ACCURACY, OR THAT THE SOFTWARE WILL OPERATE WITHOUT ERROR OR INTERRUPTION.
-
-7. COMPLETE DISCLAIMER OF LIABILITY
-IN NO EVENT SHALL SELIIM AHMED BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, CONSEQUENTIAL, PUNITIVE, OR OTHER DAMAGES (INCLUDING BUT NOT LIMITED TO LOSS OF PROFITS, LOSS OF DATA, LOSS OF USE, BUSINESS INTERRUPTION, REPUTATIONAL HARM, PHYSICAL HARM, DEATH, OR ANY OTHER DAMAGES) ARISING FROM OR RELATING TO THE SOFTWARE, WHETHER BASED ON WARRANTY, CONTRACT, TORT (INCLUDING NEGLIGENCE), PRODUCT LIABILITY, STATUTE, OR ANY OTHER LEGAL THEORY, EVEN IF SELIIM AHMED HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
-
-SELIIM AHMED DOES NOT BEAR ANY LEGAL, CIVIL, CRIMINAL, ARBITRARY, OR OTHER CONSEQUENCES OF ANY KIND ARISING FROM THE USE OR MISUSE OF THE SOFTWARE.
-
-8. INDEMNIFICATION
-You agree to indemnify, defend, and hold harmless Seliim Ahmed from and against any and all claims, liabilities, damages, losses, costs, and expenses (including reasonable attorneys' fees) arising from or relating to any violation of this license or any use of the Software by You or any person acting on Your behalf.
-
-9. TERMINATION
-Any violation of this license automatically terminates any rights You may have, whether express or implied. Upon termination, You must immediately cease all use of the Software and destroy all copies in Your possession or control.
-
-10. SEVERABILITY
-If any provision of this license is held to be unenforceable, the remaining provisions shall continue in full force and effect, and the unenforceable provision shall be construed as nearly as possible to reflect the original intent.
-
-11. GOVERNING LAW AND VENUE
-This license shall be governed by and construed in accordance with the laws of the jurisdiction where Seliim Ahmed resides at the time of enforcement, without regard to conflict of laws principles. Any legal action arising from or relating to this license or the Software shall be brought exclusively in the courts of that jurisdiction. You consent to personal jurisdiction and venue in those courts.
-
-12. NO WAIVER
-Failure of Seliim Ahmed to enforce any provision of this license shall not constitute a waiver of the right to enforce that or any other provision.
-
-13. ENTIRE AGREEMENT
-This license constitutes the entire agreement between You and Seliim Ahmed regarding the Software and supersedes all prior or contemporaneous understandings, communications, or agreements, whether written or oral.
-
-14. CONTACT FOR PERMISSION
-Any request for permission to use the Software must be submitted in writing to:
-
-seliim.ahmed@gmail.com
-
-No response from Seliim Ahmed shall be deemed a refusal, and silence does not constitute permission.
-
-15. UNAUTHORIZED USE IS AUTOMATICALLY A VIOLATION
-Any use of the Software not expressly authorized in writing as described above is strictly prohibited and constitutes a violation of this license, regardless of whether You received a cease‑and‑desist notice or other warning.
-
-END OF LICENSE
+---
+Contact: seliim.ahmed@gmail.com
+Website: https://khan-amit.github.io/make-it-/
