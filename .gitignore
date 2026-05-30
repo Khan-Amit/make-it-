@@ -1,4 +1,4 @@
-# Excel files - Too large for GitHub, generate locally
+# Excel files - Generated locally, not uploaded
 *.xlsx
 *.xls
 *.xlsm
@@ -27,10 +27,13 @@ ENV/
 Thumbs.db
 Desktop.ini
 
-# Logs
+# Logs and backups
 *.log
 *.tmp
-
-# Backup files
 *.bak
 *.backup
+
+# Sensitive data
+*.key
+*.pem
+config.py
