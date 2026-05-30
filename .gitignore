@@ -1,29 +1,11 @@
-# Compiled binaries (if any)
-*.exe
-*.out
-*.o
+# Excel files (too large for GitHub)
+*.xlsx
+*.xls
 
-# Python cache (if you ever add Python scripts)
+# Python cache
 __pycache__/
 *.pyc
 
-# Local notes saved by the tool (browser localStorage is not a file – but if you export notes)
-notes_export.txt
-*.bak
-
-# OS garbage
+# OS files
 .DS_Store
 Thumbs.db
-desktop.ini
-
-# Editor temp files
-*.swp
-*~
-*.tmp
-
-# Logs
-*.log
-
-# Your local copy of the HTML (if you keep a backup)
-software_writer_backup.html
-make-it_backup.html
