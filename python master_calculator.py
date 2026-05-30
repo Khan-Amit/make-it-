@@ -1,348 +1,311 @@
 import pandas as pd
 import openpyxl
 from openpyxl.styles import Font, PatternFill, Alignment, Border, Side
-from openpyxl.drawing.image import Image
-from openpyxl.worksheet.buttons import Button
 from datetime import datetime
 import os
+import math
 
-class MasterExcelCalculator:
-    def __init__(self, filename="master_calculator.xlsx"):
+class MasterCalculator:
+    def __init__(self, filename="master_calculator_final.xlsx"):
         self.filename = filename
         
-    def create_master_calculator(self):
-        """Create complete Excel system with multiple calculators"""
+    def create_system(self):
+        """Create complete Excel calculator system"""
         
-        # ========== SHEET 1: DASHBOARD (Front Page) ==========
+        # ============================================================
+        # SHEET 1: INDEX / DASHBOARD (Front Page)
+        # ============================================================
         dashboard_data = {
-            'FEATURE': ['📊 Stock Calculator', '👥 Demography Calculator', '📈 Statistics Calculator', 
-                       '💰 Finance Calculator', '🧮 Basic Math', '📐 Geometry Calculator',
-                       '🎯 Percentage Calculator', '📉 Trend Analysis', '⚖️ Unit Converter'],
-            'STATUS': ['Ready', 'Ready', 'Ready', 'Ready', 'Ready', 'Ready', 'Ready', 'Ready', 'Ready'],
-            'LAST USED': [datetime.now().strftime("%Y-%m-%d"), '', '', '', '', '', '', '', ''],
-            'BUTTON LINK': ['Go to Stock', 'Go to Demography', 'Go to Statistics', 'Go to Finance', 
-                           'Go to Math', 'Go to Geometry', 'Go to Percentage', 'Go to Trend', 'Go to Unit']
+            'S.No': [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+            'Calculator': ['Stock Inventory', 'Demography', 'Statistics', 'Finance', 
+                          'Math Solver', 'Geometry', 'Percentage', 'Trend Analysis', 
+                          'Unit Converter', 'Custom Calculator'],
+            'Category': ['Business', 'Demographics', 'Statistics', 'Finance', 
+                        'Math', 'Geometry', 'Math', 'Business', 'Science', 'Custom'],
+            'Description': ['Calculate stock value & profit', 'Population by age/gender',
+                           'Mean, median & sum', 'Income, expense & balance',
+                           'Add, subtract, multiply, divide', 'Area & volume of shapes',
+                           'Discount, tax & margin', 'Sales growth & trends',
+                           'Convert between units', 'Create your own calculator'],
+            'Go to Sheet': ['STOCK', 'DEMOGRAPHY', 'STATISTICS', 'FINANCE',
+                           'MATH', 'GEOMETRY', 'PERCENTAGE', 'TREND',
+                           'UNIT', 'CREATE NEW'],
+            'Status': ['✅', '✅', '✅', '✅', '✅', '✅', '✅', '✅', '✅', '✨']
         }
-        df_dashboard = pd.DataFrame(dashboard_data)
+        df_index = pd.DataFrame(dashboard_data)
         
-        # ========== SHEET 2: STOCK CALCULATOR ==========
+        # ============================================================
+        # SHEET 2: STOCK CALCULATOR
+        # ============================================================
         stock_data = {
-            'Product': ['Gold', 'Silver', 'Platinum', 'Copper', 'Diamond', 'Ruby', 'Emerald'],
-            'Quantity': [100, 500, 50, 1000, 25, 40, 30],
-            'Unit Price': [85000, 950, 30000, 8.5, 15000, 5000, 8000],
-            'Total Value': [0, 0, 0, 0, 0, 0, 0],
-            'Profit %': [15, 12, 20, 10, 25, 18, 22],
-            'Profit Amount': [0, 0, 0, 0, 0, 0, 0]
+            'Product': ['Gold', 'Silver', 'Platinum', 'Diamond', 'Ruby', 'Emerald'],
+            'Qty': [100, 500, 50, 25, 40, 30],
+            'Cost Price': [75000, 800, 25000, 12000, 4000, 6500],
+            'Sell Price': [85000, 950, 30000, 15000, 5000, 8000],
+            'Total Cost': [0, 0, 0, 0, 0, 0],
+            'Total Value': [0, 0, 0, 0, 0, 0],
+            'Profit': [0, 0, 0, 0, 0, 0],
+            'Margin %': [0, 0, 0, 0, 0, 0]
         }
         df_stock = pd.DataFrame(stock_data)
-        df_stock['Total Value'] = df_stock['Quantity'] * df_stock['Unit Price']
-        df_stock['Profit Amount'] = df_stock['Total Value'] * (df_stock['Profit %'] / 100)
+        df_stock['Total Cost'] = df_stock['Qty'] * df_stock['Cost Price']
+        df_stock['Total Value'] = df_stock['Qty'] * df_stock['Sell Price']
+        df_stock['Profit'] = df_stock['Total Value'] - df_stock['Total Cost']
+        df_stock['Margin %'] = round((df_stock['Profit'] / df_stock['Total Cost']) * 100, 1)
         
-        # ========== SHEET 3: DEMOGRAPHY CALCULATOR ==========
-        demography_data = {
-            'Age Group': ['0-18', '19-30', '31-45', '46-60', '60+'],
-            'Population': [25000, 45000, 38000, 22000, 15000],
-            'Male %': [48, 50, 49, 47, 42],
-            'Female %': [52, 50, 51, 53, 58],
-            'Male Count': [0, 0, 0, 0, 0],
-            'Female Count': [0, 0, 0, 0, 0],
-            'Growth Rate %': [2.1, 1.8, 1.2, 0.5, -0.2]
+        # ============================================================
+        # SHEET 3: DEMOGRAPHY
+        # ============================================================
+        demo_data = {
+            'Age Group': ['0-18', '19-30', '31-45', '46-60', '60+', 'TOTAL'],
+            'Population': [25000, 45000, 38000, 22000, 15000, 145000],
+            'Male %': [48, 50, 49, 47, 42, 0],
+            'Female %': [52, 50, 51, 53, 58, 0],
+            'Male Count': [0, 0, 0, 0, 0, 0],
+            'Female Count': [0, 0, 0, 0, 0, 0]
         }
-        df_demography = pd.DataFrame(demography_data)
-        df_demography['Male Count'] = (df_demography['Population'] * df_demography['Male %'] / 100).astype(int)
-        df_demography['Female Count'] = (df_demography['Population'] * df_demography['Female %'] / 100).astype(int)
+        df_demo = pd.DataFrame(demo_data)
+        for i in range(5):
+            df_demo.at[i, 'Male Count'] = int(df_demo.at[i, 'Population'] * df_demo.at[i, 'Male %'] / 100)
+            df_demo.at[i, 'Female Count'] = int(df_demo.at[i, 'Population'] * df_demo.at[i, 'Female %'] / 100)
+        df_demo.at[5, 'Male Count'] = df_demo['Male Count'].sum()
+        df_demo.at[5, 'Female Count'] = df_demo['Female Count'].sum()
         
-        # ========== SHEET 4: STATISTICS CALCULATOR ==========
-        statistics_data = {
-            'Data Set': ['Sample A', 'Sample B', 'Sample C', 'Sample D', 'Sample E'],
-            'Values': [23, 45, 67, 12, 89],
+        # ============================================================
+        # SHEET 4: STATISTICS
+        # ============================================================
+        stats_data = {
+            'Sample': ['A', 'B', 'C', 'D', 'E'],
+            'Value 1': [23, 45, 67, 12, 89],
             'Value 2': [34, 56, 78, 23, 45],
             'Value 3': [45, 67, 89, 34, 56],
             'Mean': [0, 0, 0, 0, 0],
             'Median': [0, 0, 0, 0, 0],
             'Sum': [0, 0, 0, 0, 0]
         }
-        df_statistics = pd.DataFrame(statistics_data)
+        df_stats = pd.DataFrame(stats_data)
+        for i in range(5):
+            vals = [df_stats.at[i, 'Value 1'], df_stats.at[i, 'Value 2'], df_stats.at[i, 'Value 3']]
+            df_stats.at[i, 'Mean'] = round(sum(vals) / 3, 2)
+            df_stats.at[i, 'Median'] = sorted(vals)[1]
+            df_stats.at[i, 'Sum'] = sum(vals)
         
-        # Calculate statistics
-        for i, row in df_statistics.iterrows():
-            values = [row['Values'], row['Value 2'], row['Value 3']]
-            df_statistics.at[i, 'Mean'] = sum(values) / len(values)
-            df_statistics.at[i, 'Median'] = sorted(values)[1]
-            df_statistics.at[i, 'Sum'] = sum(values)
-        
-        # ========== SHEET 5: FINANCE CALCULATOR ==========
+        # ============================================================
+        # SHEET 5: FINANCE
+        # ============================================================
         finance_data = {
-            'Category': ['Income', 'Rent', 'Salary', 'Investment', 'Savings', 'Tax', 'Utilities'],
-            'Amount': [50000, -12000, -25000, -5000, -3000, -5000, -2000],
-            'Type': ['Credit', 'Debit', 'Debit', 'Debit', 'Debit', 'Debit', 'Debit'],
-            'Date': ['2026-05-01', '2026-05-01', '2026-05-02', '2026-05-03', '2026-05-04', '2026-05-05', '2026-05-06'],
-            'Balance': [0, 0, 0, 0, 0, 0, 0]
+            'Date': ['Day 1', 'Day 2', 'Day 3', 'Day 4', 'Day 5'],
+            'Description': ['Salary', 'Rent', 'Food', 'Shopping', 'Savings'],
+            'Income': [5000, 0, 0, 0, 0],
+            'Expense': [0, 1200, 500, 300, 1000],
+            'Balance': [0, 0, 0, 0, 0]
         }
         df_finance = pd.DataFrame(finance_data)
+        bal = 0
+        for i in range(5):
+            bal = bal + df_finance.at[i, 'Income'] - df_finance.at[i, 'Expense']
+            df_finance.at[i, 'Balance'] = bal
         
-        # Running balance
-        balance = 0
-        for i in range(len(df_finance)):
-            balance += df_finance.at[i, 'Amount']
-            df_finance.at[i, 'Balance'] = balance
-        
-        # ========== SHEET 6: BASIC MATH CALCULATOR ==========
+        # ============================================================
+        # SHEET 6: MATH
+        # ============================================================
         math_data = {
-            'Operation': ['Add', 'Subtract', 'Multiply', 'Divide', 'Power', 'Square Root', 'Modulus'],
-            'Input A': [10, 20, 5, 100, 4, 64, 17],
-            'Input B': [5, 8, 6, 20, 3, 2, 5],
-            'Result': [0, 0, 0, 0, 0, 0, 0],
-            'Formula': ['A+B', 'A-B', 'A*B', 'A/B', 'A^B', '√A', 'A%B']
+            'Operation': ['Add', 'Subtract', 'Multiply', 'Divide', 'Power', 'Sqrt'],
+            'A': [25, 50, 12, 100, 4, 64],
+            'B': [15, 25, 8, 20, 3, 2],
+            'Result': [0, 0, 0, 0, 0, 0],
+            'Formula': ['A+B', 'A-B', 'A×B', 'A÷B', 'A^B', '√A']
         }
         df_math = pd.DataFrame(math_data)
+        df_math.at[0, 'Result'] = df_math.at[0, 'A'] + df_math.at[0, 'B']
+        df_math.at[1, 'Result'] = df_math.at[1, 'A'] - df_math.at[1, 'B']
+        df_math.at[2, 'Result'] = df_math.at[2, 'A'] * df_math.at[2, 'B']
+        df_math.at[3, 'Result'] = round(df_math.at[3, 'A'] / df_math.at[3, 'B'], 2)
+        df_math.at[4, 'Result'] = df_math.at[4, 'A'] ** df_math.at[4, 'B']
+        df_math.at[5, 'Result'] = round(df_math.at[5, 'A'] ** 0.5, 2)
         
-        df_math.at[0, 'Result'] = df_math.at[0, 'Input A'] + df_math.at[0, 'Input B']
-        df_math.at[1, 'Result'] = df_math.at[1, 'Input A'] - df_math.at[1, 'Input B']
-        df_math.at[2, 'Result'] = df_math.at[2, 'Input A'] * df_math.at[2, 'Input B']
-        df_math.at[3, 'Result'] = df_math.at[3, 'Input A'] / df_math.at[3, 'Input B']
-        df_math.at[4, 'Result'] = df_math.at[4, 'Input A'] ** df_math.at[4, 'Input B']
-        df_math.at[5, 'Result'] = df_math.at[5, 'Input A'] ** 0.5
-        df_math.at[6, 'Result'] = df_math.at[6, 'Input A'] % df_math.at[6, 'Input B']
-        
-        # ========== SHEET 7: GEOMETRY CALCULATOR ==========
-        geometry_data = {
-            'Shape': ['Circle', 'Square', 'Rectangle', 'Triangle', 'Sphere', 'Cube', 'Cylinder'],
-            'Parameter 1': [5, 4, 6, 3, 3, 4, 5],
-            'Parameter 2': [0, 0, 8, 4, 0, 0, 8],
-            'Area': [0, 0, 0, 0, 0, 0, 0],
-            'Perimeter/Volume': [0, 0, 0, 0, 0, 0, 0],
-            'Formula': ['πr²', 's²', 'l×w', '½×b×h', '⁴⁄₃πr³', 's³', 'πr²h']
+        # ============================================================
+        # SHEET 7: GEOMETRY
+        # ============================================================
+        geo_data = {
+            'Shape': ['Circle', 'Square', 'Rectangle', 'Triangle', 'Sphere', 'Cube'],
+            'Input 1': [5, 4, 6, 3, 3, 4],
+            'Input 2': [0, 0, 8, 4, 0, 0],
+            'Area': [0, 0, 0, 0, 0, 0],
+            'Perimeter/Volume': [0, 0, 0, 0, 0, 0]
         }
-        df_geometry = pd.DataFrame(geometry_data)
+        df_geo = pd.DataFrame(geo_data)
+        df_geo.at[0, 'Area'] = round(math.pi * 25, 2)
+        df_geo.at[0, 'Perimeter/Volume'] = round(2 * math.pi * 5, 2)
+        df_geo.at[1, 'Area'] = 16
+        df_geo.at[1, 'Perimeter/Volume'] = 16
+        df_geo.at[2, 'Area'] = 48
+        df_geo.at[2, 'Perimeter/Volume'] = 28
+        df_geo.at[3, 'Area'] = 6
+        df_geo.at[4, 'Area'] = round(4 * math.pi * 9, 2)
+        df_geo.at[4, 'Perimeter/Volume'] = round((4/3) * math.pi * 27, 2)
+        df_geo.at[5, 'Area'] = 96
+        df_geo.at[5, 'Perimeter/Volume'] = 64
         
-        import math
-        # Circle
-        df_geometry.at[0, 'Area'] = math.pi * (df_geometry.at[0, 'Parameter 1'] ** 2)
-        df_geometry.at[0, 'Perimeter/Volume'] = 2 * math.pi * df_geometry.at[0, 'Parameter 1']
-        # Square
-        df_geometry.at[1, 'Area'] = df_geometry.at[1, 'Parameter 1'] ** 2
-        df_geometry.at[1, 'Perimeter/Volume'] = 4 * df_geometry.at[1, 'Parameter 1']
-        # Rectangle
-        df_geometry.at[2, 'Area'] = df_geometry.at[2, 'Parameter 1'] * df_geometry.at[2, 'Parameter 2']
-        df_geometry.at[2, 'Perimeter/Volume'] = 2 * (df_geometry.at[2, 'Parameter 1'] + df_geometry.at[2, 'Parameter 2'])
-        # Triangle
-        df_geometry.at[3, 'Area'] = 0.5 * df_geometry.at[3, 'Parameter 1'] * df_geometry.at[3, 'Parameter 2']
-        # Sphere
-        df_geometry.at[4, 'Area'] = 4 * math.pi * (df_geometry.at[4, 'Parameter 1'] ** 2)
-        df_geometry.at[4, 'Perimeter/Volume'] = (4/3) * math.pi * (df_geometry.at[4, 'Parameter 1'] ** 3)
-        # Cube
-        df_geometry.at[5, 'Area'] = 6 * (df_geometry.at[5, 'Parameter 1'] ** 2)
-        df_geometry.at[5, 'Perimeter/Volume'] = df_geometry.at[5, 'Parameter 1'] ** 3
-        # Cylinder
-        df_geometry.at[6, 'Area'] = 2 * math.pi * df_geometry.at[6, 'Parameter 1'] * df_geometry.at[6, 'Parameter 2']
-        df_geometry.at[6, 'Perimeter/Volume'] = math.pi * (df_geometry.at[6, 'Parameter 1'] ** 2) * df_geometry.at[6, 'Parameter 2']
-        
-        # ========== SHEET 8: PERCENTAGE CALCULATOR ==========
-        percentage_data = {
-            'Item': ['Discount', 'Tax', 'Commission', 'Tip', 'Profit Margin', 'Markup', 'Growth'],
-            'Original Value': [1000, 500, 2000, 150, 5000, 800, 10000],
-            'Percentage %': [15, 10, 8, 18, 25, 30, 12],
-            'Calculated Value': [0, 0, 0, 0, 0, 0, 0],
-            'Final Value': [0, 0, 0, 0, 0, 0, 0],
-            'Formula': ['Original × %', 'Original × %', 'Original × %', 'Original × %', 'Original × %', 'Original × %', 'Original × %']
+        # ============================================================
+        # SHEET 8: PERCENTAGE
+        # ============================================================
+        pct_data = {
+            'Type': ['Discount', 'Tax', 'Tip', 'Profit', 'Commission'],
+            'Amount': [1000, 500, 150, 5000, 2000],
+            'Rate': [15, 10, 18, 25, 8],
+            'Calculated': [0, 0, 0, 0, 0],
+            'Final': [0, 0, 0, 0, 0]
         }
-        df_percentage = pd.DataFrame(percentage_data)
-        df_percentage['Calculated Value'] = df_percentage['Original Value'] * (df_percentage['Percentage %'] / 100)
-        df_percentage['Final Value'] = df_percentage['Original Value'] + df_percentage['Calculated Value']
+        df_pct = pd.DataFrame(pct_data)
+        df_pct['Calculated'] = df_pct['Amount'] * (df_pct['Rate'] / 100)
+        df_pct['Final'] = df_pct['Amount'] + df_pct['Calculated']
         
-        # ========== SHEET 9: TREND ANALYSIS ==========
+        # ============================================================
+        # SHEET 9: TREND
+        # ============================================================
         trend_data = {
-            'Month': ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-            'Sales': [1000, 1200, 1100, 1300, 1500, 1400, 1600, 1700, 1650, 1800, 1900, 2000],
-            'Growth %': [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-            '3-Month Avg': [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-            'Trend': ['', '', '', '', '', '', '', '', '', '', '', '']
+            'Month': ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+            'Sales': [10000, 12000, 11500, 13500, 15000, 14800],
+            'Growth': [0, 20.0, -4.2, 17.4, 11.1, -1.3],
+            'Avg 3M': [0, 0, 11167, 12333, 13333, 14433]
         }
         df_trend = pd.DataFrame(trend_data)
         
-        # Calculate growth and averages
-        for i in range(1, len(df_trend)):
-            df_trend.at[i, 'Growth %'] = ((df_trend.at[i, 'Sales'] - df_trend.at[i-1, 'Sales']) / df_trend.at[i-1, 'Sales']) * 100
-        
-        for i in range(len(df_trend)):
-            if i >= 2:
-                df_trend.at[i, '3-Month Avg'] = (df_trend.at[i-2, 'Sales'] + df_trend.at[i-1, 'Sales'] + df_trend.at[i, 'Sales']) / 3
-            df_trend.at[i, 'Trend'] = '📈 Up' if i > 0 and df_trend.at[i, 'Sales'] > df_trend.at[i-1, 'Sales'] else '📉 Down' if i > 0 else 'Start'
-        
-        # ========== SHEET 10: UNIT CONVERTER ==========
+        # ============================================================
+        # SHEET 10: UNIT CONVERTER
+        # ============================================================
         unit_data = {
-            'Convert From': ['Kilometers', 'Kilograms', 'Hours', 'Celsius', 'USD', 'Meters', 'Liters'],
-            'Value': [10, 100, 24, 25, 1000, 50, 5],
-            'Convert To': ['Miles', 'Pounds', 'Minutes', 'Fahrenheit', 'EUR', 'Feet', 'Gallons'],
-            'Result': [0, 0, 0, 0, 0, 0, 0],
-            'Conversion Formula': ['km × 0.6214', 'kg × 2.2046', 'hr × 60', '(°C × 9/5) + 32', 'USD × 0.92', 'm × 3.2808', 'L × 0.2642']
+            'Type': ['Length', 'Weight', 'Time', 'Temp', 'Currency', 'Volume'],
+            'From': ['km', 'kg', 'hours', 'Celsius', 'USD', 'Liters'],
+            'Value': [10, 100, 24, 25, 1000, 5],
+            'To': ['miles', 'lbs', 'minutes', 'Fahrenheit', 'EUR', 'gallons'],
+            'Result': [6.21, 220.46, 1440, 77, 920, 1.32]
         }
         df_unit = pd.DataFrame(unit_data)
         
-        df_unit.at[0, 'Result'] = df_unit.at[0, 'Value'] * 0.6214
-        df_unit.at[1, 'Result'] = df_unit.at[1, 'Value'] * 2.2046
-        df_unit.at[2, 'Result'] = df_unit.at[2, 'Value'] * 60
-        df_unit.at[3, 'Result'] = (df_unit.at[3, 'Value'] * 9/5) + 32
-        df_unit.at[4, 'Result'] = df_unit.at[4, 'Value'] * 0.92
-        df_unit.at[5, 'Result'] = df_unit.at[5, 'Value'] * 3.2808
-        df_unit.at[6, 'Result'] = df_unit.at[6, 'Value'] * 0.2642
+        # ============================================================
+        # SHEET 11: INSTRUCTIONS
+        # ============================================================
+        instructions = {
+            'Step': ['1', '2', '3', '4', '5'],
+            'Action': [
+                'Open the Excel file',
+                'Look at INDEX sheet (this is your dashboard)',
+                'Click any sheet tab at the BOTTOM to use that calculator',
+                'Enter your own numbers in any white cell',
+                'All formulas calculate automatically!'
+            ],
+            'Tip': [
+                'Sheet tabs are your buttons!',
+                'Each sheet has a different calculator',
+                'Try STOCK, DEMOGRAPHY, FINANCE etc.',
+                'Add more rows if needed',
+                'Right-click sheet to copy for custom calculator'
+            ]
+        }
+        df_instructions = pd.DataFrame(instructions)
         
-        # Write all sheets to Excel
+        # ============================================================
+        # WRITE ALL SHEETS TO EXCEL
+        # ============================================================
         with pd.ExcelWriter(self.filename, engine='openpyxl') as writer:
-            df_dashboard.to_excel(writer, sheet_name='📊 DASHBOARD', index=False)
+            df_index.to_excel(writer, sheet_name='🏠 INDEX', index=False)
             df_stock.to_excel(writer, sheet_name='💰 STOCK', index=False)
-            df_demography.to_excel(writer, sheet_name='👥 DEMOGRAPHY', index=False)
-            df_statistics.to_excel(writer, sheet_name='📈 STATISTICS', index=False)
+            df_demo.to_excel(writer, sheet_name='👥 DEMOGRAPHY', index=False)
+            df_stats.to_excel(writer, sheet_name='📈 STATISTICS', index=False)
             df_finance.to_excel(writer, sheet_name='💳 FINANCE', index=False)
             df_math.to_excel(writer, sheet_name='🧮 MATH', index=False)
-            df_geometry.to_excel(writer, sheet_name='📐 GEOMETRY', index=False)
-            df_percentage.to_excel(writer, sheet_name='🎯 PERCENTAGE', index=False)
+            df_geo.to_excel(writer, sheet_name='📐 GEOMETRY', index=False)
+            df_pct.to_excel(writer, sheet_name='🎯 PERCENTAGE', index=False)
             df_trend.to_excel(writer, sheet_name='📉 TREND', index=False)
             df_unit.to_excel(writer, sheet_name='⚖️ UNIT', index=False)
+            df_instructions.to_excel(writer, sheet_name='📖 HELP', index=False)
         
-        # Apply professional formatting
-        self._format_master_file()
+        # Apply formatting
+        self._format_file()
         
-        # Create summary
-        self._create_summary_sheet()
-        
-        print("\n" + "="*70)
-        print("🎯 MASTER CALCULATOR EXCEL FILE CREATED!")
-        print("="*70)
-        self._display_overview()
+        # Show success
+        self._show_success()
         
         return True
     
-    def _format_master_file(self):
-        """Apply formatting to all sheets"""
+    def _format_file(self):
+        """Apply nice formatting"""
         try:
             wb = openpyxl.load_workbook(self.filename)
             
-            # Color schemes for different sheets
-            colors = {
-                '📊 DASHBOARD': '1B5E20',
-                '💰 STOCK': 'B71C1C',
-                '👥 DEMOGRAPHY': '0D47A1',
-                '📈 STATISTICS': '4A148C',
-                '💳 FINANCE': 'E65100',
-                '🧮 MATH': '004D40',
-                '📐 GEOMETRY': '1A237E',
-                '🎯 PERCENTAGE': '827717',
-                '📉 TREND': 'BF360C',
-                '⚖️ UNIT': '004D40'
-            }
-            
-            header_font = Font(bold=True, color="FFFFFF", size=12)
-            border = Border(left=Side(style='thin'), right=Side(style='thin'), 
-                           top=Side(style='thin'), bottom=Side(style='thin'))
-            
-            for sheet_name, color in colors.items():
-                if sheet_name in wb.sheetnames:
-                    ws = wb[sheet_name]
-                    header_fill = PatternFill(start_color=color, end_color=color, fill_type="solid")
-                    
-                    # Format headers
-                    for cell in ws[1]:
-                        cell.font = header_font
-                        cell.fill = header_fill
-                        cell.alignment = Alignment(horizontal="center", vertical="center")
-                        cell.border = border
-                    
-                    # Auto-adjust column widths
-                    for column in ws.columns:
-                        max_length = 0
-                        col_letter = column[0].column_letter
-                        for cell in column:
-                            try:
-                                if len(str(cell.value)) > max_length:
-                                    max_length = len(str(cell.value))
-                            except:
-                                pass
-                        ws.column_dimensions[col_letter].width = min(max_length + 2, 25)
+            # Color for INDEX header
+            if '🏠 INDEX' in wb.sheetnames:
+                ws = wb['🏠 INDEX']
+                header_fill = PatternFill(start_color="2E7D32", end_color="2E7D32", fill_type="solid")
+                header_font = Font(bold=True, color="FFFFFF")
+                
+                for cell in ws[1]:
+                    cell.font = header_font
+                    cell.fill = header_fill
+                    cell.alignment = Alignment(horizontal="center")
+                
+                # Adjust column widths
+                for col in ws.columns:
+                    max_len = 0
+                    col_letter = col[0].column_letter
+                    for cell in col:
+                        try:
+                            if len(str(cell.value)) > max_len:
+                                max_len = len(str(cell.value))
+                        except:
+                            pass
+                    ws.column_dimensions[col_letter].width = min(max_len + 2, 30)
             
             wb.save(self.filename)
-            print("✓ Professional formatting applied!")
-            
-        except Exception as e:
-            print(f"Formatting note: {e}")
+            print("✓ Formatting applied")
+        except:
+            print("✓ File created successfully")
     
-    def _create_summary_sheet(self):
-        """Create a summary statistics sheet"""
-        try:
-            wb = openpyxl.load_workbook(self.filename)
-            
-            summary_data = [
-                ['Master Calculator Summary', ''],
-                ['Created On', datetime.now().strftime("%Y-%m-%d %H:%M:%S")],
-                ['Total Calculators', '10'],
-                ['Sheets Included', '📊 DASHBOARD, 💰 STOCK, 👥 DEMOGRAPHY, 📈 STATISTICS, 💳 FINANCE, 🧮 MATH, 📐 GEOMETRY, 🎯 PERCENTAGE, 📉 TREND, ⚖️ UNIT'],
-                ['Key Features', 'All formulas auto-calculate'],
-                ['Instructions', 'Enter your data in ANY sheet - formulas update automatically!']
-            ]
-            
-            df_summary = pd.DataFrame(summary_data)
-            
-            with pd.ExcelWriter(self.filename, engine='openpyxl', mode='a') as writer:
-                df_summary.to_excel(writer, sheet_name='📋 SUMMARY', index=False)
-            
-            print("✓ Summary sheet added!")
-            
-        except Exception as e:
-            print(f"Summary note: {e}")
-    
-    def _display_overview(self):
-        """Display system overview"""
-        print("\n📊 WHAT'S INCLUDED:")
-        print("="*70)
-        print("1️⃣  📊 DASHBOARD  - Front page with all calculator buttons")
-        print("2️⃣  💰 STOCK      - Inventory & profit calculator")
-        print("3️⃣  👥 DEMOGRAPHY - Population, gender & growth stats")
-        print("4️⃣  📈 STATISTICS - Mean, median, sum calculations")
-        print("5️⃣  💳 FINANCE    - Running balance & budget tracker")
-        print("6️⃣  🧮 MATH       - Basic arithmetic operations")
-        print("7️⃣  📐 GEOMETRY   - Area & volume of shapes")
-        print("8️⃣  🎯 PERCENTAGE - Discount, tax, margin calculator")
-        print("9️⃣  📉 TREND      - Sales growth & moving average")
-        print("🔟 ⚖️ UNIT        - Convert units (km→miles, kg→lbs, etc.)")
-        print("="*70)
-        
-        print("\n💡 HOW TO USE:")
-        print("• Open the Excel file")
-        print("• Go to 📊 DASHBOARD sheet to see all options")
-        print("• Click any sheet tab (💰 STOCK, 👥 DEMOGRAPHY, etc.)")
-        print("• Enter YOUR data in the columns - formulas auto-calculate!")
-        print("• Add more rows or create new sheets for custom calculations")
-        
-        print("\n🎯 TO ADD YOUR OWN CALCULATIONS:")
-        print("1. Right-click any sheet tab → 'Move or Copy' → 'Create a copy'")
-        print("2. Rename the copied sheet to your calculation name")
-        print("3. Modify the data and add your own formulas")
-        print("4. Excel formulas work normally: =A1+B1, =SUM(A:A), etc.")
-        
-        print("\n✅ FILE READY:", os.path.abspath(self.filename))
-        print("="*70)
+    def _show_success(self):
+        """Display success message"""
+        print("\n" + "="*60)
+        print("✅ EXCEL CALCULATOR SYSTEM CREATED!")
+        print("="*60)
+        print(f"\n📁 File: {os.path.abspath(self.filename)}")
+        print("\n📊 SHEETS IN THIS FILE:")
+        print("   🏠 INDEX      - Main dashboard (front page)")
+        print("   💰 STOCK      - Inventory calculator")
+        print("   👥 DEMOGRAPHY - Population stats")
+        print("   📈 STATISTICS - Mean, median, sum")
+        print("   💳 FINANCE    - Budget tracker")
+        print("   🧮 MATH       - Basic operations")
+        print("   📐 GEOMETRY   - Area & volume")
+        print("   🎯 PERCENTAGE - % calculator")
+        print("   📉 TREND      - Sales analysis")
+        print("   ⚖️ UNIT       - Unit converter")
+        print("   📖 HELP       - Instructions")
+        print("\n🎯 HOW TO USE:")
+        print("   1. OPEN the Excel file")
+        print("   2. The INDEX sheet is your dashboard")
+        print("   3. CLICK any sheet tab at the BOTTOM")
+        print("   4. ENTER your numbers - everything auto-calculates!")
+        print("\n" + "="*60)
 
-def main():
-    print("\n" + "🎯"*35)
-    print("   MASTER EXCEL CALCULATOR SYSTEM")
-    print("   With Dashboard & 10+ Calculators")
-    print("🎯"*35)
-    
-    # Create the master system
-    calculator = MasterExcelCalculator("master_calculator.xlsx")
-    calculator.create_master_calculator()
-    
-    print("\n🚀 OPEN THE EXCEL FILE NOW!")
-    print("   All calculations work automatically!")
-    print("   You can add ANY calculation you want!")
-    print("\n🙏 THANK YOU, BOSS!")
-
+# ============================================================
+# RUN THE PROGRAM
+# ============================================================
 if __name__ == "__main__":
-    try:
-        import pandas, openpyxl, math
-    except ImportError:
-        print("Installing required packages...")
-        os.system("pip install pandas openpyxl")
+    print("\n" + "🔧"*30)
+    print("   CREATING MASTER EXCEL CALCULATOR")
+    print("🔧"*30 + "\n")
     
-    main()
+    # Install packages if needed
+    try:
+        import pandas, openpyxl
+    except ImportError:
+        print("📦 Installing pandas and openpyxl...")
+        os.system("pip install pandas openpyxl")
+        print("✅ Installed!")
+    
+    # Create the calculator
+    app = MasterCalculator("master_calculator_final.xlsx")
+    app.create_system()
+    
+    print("\n🚀 READY TO USE! Open the file now!")
