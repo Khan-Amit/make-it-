@@ -71,13 +71,19 @@
         
         .btn {
             display: inline-block;
-            padding: 15px 30px;
+            padding: 18px 35px;
             border-radius: 50px;
             text-decoration: none;
             font-weight: bold;
             margin: 10px;
             cursor: pointer;
             border: none;
+            font-size: 1.1em;
+        }
+        
+        .btn-download {
+            background: linear-gradient(135deg, #FF6B35, #F7931E);
+            color: white;
         }
         
         .btn-buy {
@@ -90,7 +96,20 @@
             color: white;
         }
         
-        /* DEMO CALCULATORS */
+        .download-section {
+            text-align: center;
+            background: linear-gradient(135deg, #e8f5e9, #c8e6c9);
+            padding: 30px;
+            border-radius: 20px;
+            margin: 20px 0;
+            border: 2px solid #4CAF50;
+        }
+        
+        .download-section h2 {
+            color: #1B5E20;
+            margin-bottom: 15px;
+        }
+        
         .demo-container {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -102,7 +121,7 @@
             background: #f9f9f9;
             border-radius: 20px;
             padding: 25px;
-            border: 2px solid #4CAF50;
+            border: 1px solid #ddd;
         }
         
         .demo-box h3 {
@@ -130,7 +149,7 @@
         }
         
         .result-value {
-            font-size: 1.5em;
+            font-size: 1.3em;
             color: #1B5E20;
         }
         
@@ -147,10 +166,6 @@
             border-radius: 12px;
             text-align: center;
             border: 1px solid #ddd;
-        }
-        
-        .calculator-icon {
-            font-size: 2em;
         }
         
         .instruction-popup {
@@ -186,10 +201,6 @@
             text-align: center;
         }
         
-        .footer a {
-            color: #4CAF50;
-        }
-        
         @media (max-width: 768px) {
             .header h1 { font-size: 1.5em; }
             .price-banner .price { font-size: 2em; }
@@ -215,79 +226,64 @@
     </div>
     
     <div class="content">
-        <!-- BUY BUTTONS -->
-        <div style="text-align: center; margin: 20px 0;">
-            <button class="btn btn-buy" onclick="contactForPayment()">💎 Buy Now - $199</button>
-            <button class="btn btn-instruction" onclick="showInstructions()">📋 Payment Instructions</button>
+        
+        <!-- DOWNLOAD SECTION - BIG BUTTON HERE -->
+        <div class="download-section">
+            <h2>📥 FREE DEMO - Try Before You Buy</h2>
+            <p style="margin-bottom: 20px;">Download the actual Excel file and test it on your computer</p>
+            <a href="demo_calculator.xlsx" class="btn btn-download" download="demo_calculator.xlsx" style="font-size: 1.3em; padding: 15px 40px;">
+                ⬇️ DOWNLOAD FREE DEMO EXCEL FILE ⬇️
+            </a>
+            <p style="margin-top: 15px; font-size: 0.9em;">File: demo_calculator.xlsx | Size: ~15KB | Opens in Excel</p>
         </div>
         
-        <!-- LIVE DEMO SECTION -->
-        <h2 class="section-title">🎯 LIVE DEMO - Try Now!</h2>
+        <!-- LIVE PREVIEW SECTION -->
+        <h2 class="section-title">🎯 Live Preview (Try numbers here)</h2>
         <div class="demo-container">
-            
-            <!-- Stock Calculator Demo -->
             <div class="demo-box">
                 <h3>💰 Stock Profit Calculator</h3>
                 <label>Quantity:</label>
                 <input type="number" id="qty" class="demo-input" value="100" oninput="calculateStock()">
-                
                 <label>Cost Price ($):</label>
                 <input type="number" id="cost" class="demo-input" value="75000" oninput="calculateStock()">
-                
                 <label>Selling Price ($):</label>
                 <input type="number" id="price" class="demo-input" value="85000" oninput="calculateStock()">
-                
                 <div class="demo-result">
-                    Total Cost: $<span id="totalCost" class="result-value">7,500,000</span><br>
-                    Total Value: $<span id="totalValue" class="result-value">8,500,000</span><br>
                     Profit: $<span id="profit" class="result-value">1,000,000</span><br>
                     Margin: <span id="margin" class="result-value">13.33</span>%
                 </div>
             </div>
-            
-            <!-- Percentage Calculator Demo -->
             <div class="demo-box">
                 <h3>🎯 Percentage Calculator</h3>
                 <label>Original Amount ($):</label>
                 <input type="number" id="amount" class="demo-input" value="1000" oninput="calculatePercentage()">
-                
                 <label>Rate (%):</label>
                 <input type="number" id="rate" class="demo-input" value="15" oninput="calculatePercentage()">
-                
                 <div class="demo-result">
                     Calculated: $<span id="calculated" class="result-value">150.00</span><br>
-                    Final Amount: $<span id="finalAmount" class="result-value">1,150.00</span>
+                    Final: $<span id="finalAmount" class="result-value">1,150.00</span>
                 </div>
-            </div>
-        </div>
-        
-        <!-- Math Demo -->
-        <div class="demo-box" style="margin-top: 20px;">
-            <h3>🧮 Math Calculator</h3>
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
-                <input type="number" id="num1" class="demo-input" value="25" placeholder="Number A" oninput="calculateMath()">
-                <input type="number" id="num2" class="demo-input" value="15" placeholder="Number B" oninput="calculateMath()">
-            </div>
-            <div class="demo-result">
-                Addition: <span id="add">40</span> &nbsp;|&nbsp;
-                Subtraction: <span id="sub">10</span> &nbsp;|&nbsp;
-                Multiplication: <span id="mul">375</span> &nbsp;|&nbsp;
-                Division: <span id="div">1.67</span>
             </div>
         </div>
         
         <h2 class="section-title">💎 Full Version (10 Calculators)</h2>
         <div class="calculator-grid">
-            <div class="calculator-card"><div class="calculator-icon">💰</div> Stock Inventory</div>
-            <div class="calculator-card"><div class="calculator-icon">👥</div> Demography</div>
-            <div class="calculator-card"><div class="calculator-icon">📈</div> Statistics</div>
-            <div class="calculator-card"><div class="calculator-icon">💳</div> Finance</div>
-            <div class="calculator-card"><div class="calculator-icon">🧮</div> Math Solver</div>
-            <div class="calculator-card"><div class="calculator-icon">📐</div> Geometry</div>
-            <div class="calculator-card"><div class="calculator-icon">🎯</div> Percentage</div>
-            <div class="calculator-card"><div class="calculator-icon">📉</div> Trend Analysis</div>
-            <div class="calculator-card"><div class="calculator-icon">⚖️</div> Unit Converter</div>
-            <div class="calculator-card"><div class="calculator-icon">🏠</div> INDEX Dashboard</div>
+            <div class="calculator-card">💰 Stock Inventory</div>
+            <div class="calculator-card">👥 Demography</div>
+            <div class="calculator-card">📈 Statistics</div>
+            <div class="calculator-card">💳 Finance</div>
+            <div class="calculator-card">🧮 Math Solver</div>
+            <div class="calculator-card">📐 Geometry</div>
+            <div class="calculator-card">🎯 Percentage</div>
+            <div class="calculator-card">📉 Trend Analysis</div>
+            <div class="calculator-card">⚖️ Unit Converter</div>
+            <div class="calculator-card">🏠 INDEX Dashboard</div>
+        </div>
+        
+        <!-- BUY BUTTONS -->
+        <div style="text-align: center; margin: 30px 0;">
+            <button class="btn btn-buy" onclick="contactForPayment()">💎 Buy Full Version - $199</button>
+            <button class="btn btn-instruction" onclick="showInstructions()">📋 Payment Instructions</button>
         </div>
         
         <h2 class="section-title">💳 Payment Methods</h2>
@@ -298,18 +294,17 @@
             <div class="calculator-card">🏛️ Bank Transfer</div>
         </div>
         
-        <div style="text-align: center; padding: 20px; background: #f0fdf4; border-radius: 15px; margin-top: 20px;">
+        <div style="text-align: center; padding: 20px; background: #f0fdf4; border-radius: 15px;">
             <span>🏆 7-Day Money-Back Guarantee</span>
         </div>
     </div>
     
     <div class="footer">
         <p>© 2026 Seliim Ahmed | seliim.ahmed@gmail.com</p>
-        <p><a href="#" onclick="showInstructions()">Instructions</a> | <a href="LICENSE">License</a></p>
+        <p><a href="#" onclick="showInstructions()" style="color:#4CAF50;">Instructions</a> | <a href="LICENSE" style="color:#4CAF50;">License</a></p>
     </div>
 </div>
 
-<!-- POPUP -->
 <div id="instructionPopup" class="instruction-popup">
     <div class="instruction-content">
         <span class="close-btn" onclick="closeInstructions()">&times;</span>
@@ -338,14 +333,10 @@
         let qty = parseFloat(document.getElementById('qty').value) || 0;
         let cost = parseFloat(document.getElementById('cost').value) || 0;
         let price = parseFloat(document.getElementById('price').value) || 0;
-        
         let totalCost = qty * cost;
         let totalValue = qty * price;
         let profit = totalValue - totalCost;
         let margin = totalCost > 0 ? (profit / totalCost * 100) : 0;
-        
-        document.getElementById('totalCost').innerHTML = totalCost.toLocaleString();
-        document.getElementById('totalValue').innerHTML = totalValue.toLocaleString();
         document.getElementById('profit').innerHTML = profit.toLocaleString();
         document.getElementById('margin').innerHTML = margin.toFixed(2);
     }
@@ -353,22 +344,10 @@
     function calculatePercentage() {
         let amount = parseFloat(document.getElementById('amount').value) || 0;
         let rate = parseFloat(document.getElementById('rate').value) || 0;
-        
         let calculated = amount * rate / 100;
         let final = amount + calculated;
-        
         document.getElementById('calculated').innerHTML = calculated.toFixed(2);
         document.getElementById('finalAmount').innerHTML = final.toLocaleString();
-    }
-    
-    function calculateMath() {
-        let num1 = parseFloat(document.getElementById('num1').value) || 0;
-        let num2 = parseFloat(document.getElementById('num2').value) || 0;
-        
-        document.getElementById('add').innerHTML = num1 + num2;
-        document.getElementById('sub').innerHTML = num1 - num2;
-        document.getElementById('mul').innerHTML = num1 * num2;
-        document.getElementById('div').innerHTML = num2 !== 0 ? (num1 / num2).toFixed(2) : '∞';
     }
     
     function showInstructions() {
@@ -380,14 +359,12 @@
     }
     
     function contactForPayment() {
-        alert("📞 TO PURCHASE:\n\nEmail: seliim.ahmed@gmail.com\n\nPlease provide:\n1. Your full name\n2. Preferred payment method\n3. Your email for delivery\n\nYou will receive:\n✅ Payment instructions\n✅ Digital Certificate after payment\n✅ Software download link\n\nThank you! 🙏");
+        alert("📞 TO PURCHASE:\n\nEmail: seliim.ahmed@gmail.com\n\nPlease provide:\n1. Your full name\n2. Preferred payment method\n3. Your email for delivery\n\nYou will receive:\n✅ Payment instructions\n✅ Digital Certificate\n✅ Software download link");
     }
     
-    // Initialize all calculators on page load
     window.onload = function() {
         calculateStock();
         calculatePercentage();
-        calculateMath();
     }
 </script>
 
