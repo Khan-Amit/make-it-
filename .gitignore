@@ -1,23 +1,29 @@
-### AL ###
-#Template for AL projects for Dynamics 365 Business Central
-#launch.json folder
-.vscode/
-#Cache folder
-.alcache/
-#Symbols folder
-.alpackages/
-#Snapshots folder
-.snapshots/
-#Testing Output folder
-.output/
-#Extension App-file
-*.app
-#Rapid Application Development File
-rad.json
-#Translation Base-file
-*.g.xlf
-#License-files
-*.bclicense
-*.flf
-#Test results file
-TestResults.xml
+# Compiled binaries (if any)
+*.exe
+*.out
+*.o
+
+# Python cache (if you ever add Python scripts)
+__pycache__/
+*.pyc
+
+# Local notes saved by the tool (browser localStorage is not a file – but if you export notes)
+notes_export.txt
+*.bak
+
+# OS garbage
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor temp files
+*.swp
+*~
+*.tmp
+
+# Logs
+*.log
+
+# Your local copy of the HTML (if you keep a backup)
+software_writer_backup.html
+make-it_backup.html
