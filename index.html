@@ -1,55 +1,266 @@
-d">
-                <div class="calculator-card demo-card">
-                    <div class="calculator-icon">💰</div>
-                    <div class="calculator-name">DEMO: Stock Calculator</div>
-                    <div class="calculator-desc"><strong>FULLY WORKING!</strong> Enter quantities, costs, prices. Profit & margin AUTO-CALCULATE instantly!</div>
-                    <span class="demo-badge">🔥 Working Demo</span>
-                </div>
-                <div  demo-card">
-                    <div class="calculator-icon">🎯</div>
-                    <div class="calculator-name">DEMO: Percentage Calculator</div>
-                    <div class="calculator-desc"><strong>FULLY WORKING!</strong> Calculate discounts, tax, tips. Results appear INSTANTLY when you type!</div>
-                    <span class="demo-badge">🔥 Working Demo</span>
-                </div>
-                <div class="calculator-card demo-card">
-                    <div class="calculator-icon">🧮</div>
-                    <div class="calculator-name">DEMO: Math Operations</div>
-                    <div class="calculator-desc"><strong>FULLY WORKING!</strong> Add, subtract, multiply, divide. See LIVE results as you calculate!</div>
-                    <span class="demo-badge">🔥 Working Demo</span>
-                </div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Master Excel Calculator System</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 30px;
+            overflow: hidden;
+            box-shadow: 0 25px 60px rgba(0,0,0,0.4);
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #1B5E20, #0D3B0F);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        
+        .price-banner {
+            background: linear-gradient(135deg, #FF6B35, #F7931E);
+            padding: 20px;
+            text-align: center;
+            color: white;
+        }
+        
+        .price-banner .price {
+            font-size: 3em;
+            font-weight: bold;
+        }
+        
+        .price-banner .original {
+            text-decoration: line-through;
+            opacity: 0.8;
+        }
+        
+        .content {
+            padding: 40px;
+        }
+        
+        .section-title {
+            font-size: 1.8em;
+            color: #1B5E20;
+            margin-bottom: 20px;
+            border-left: 5px solid #FF6B35;
+            padding-left: 20px;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 15px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            margin: 10px;
+            cursor: pointer;
+        }
+        
+        .btn-demo {
+            background: linear-gradient(135deg, #FF6B35, #F7931E);
+            color: white;
+            border: none;
+        }
+        
+        .btn-buy {
+            background: linear-gradient(135deg, #1B5E20, #2E7D32);
+            color: white;
+            border: none;
+        }
+        
+        .btn-instruction {
+            background: #1565C0;
+            color: white;
+            border: none;
+        }
+        
+        .calculator-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+        
+        .calculator-card {
+            background: #f9f9f9;
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            border: 1px solid #ddd;
+        }
+        
+        .calculator-icon {
+            font-size: 2.5em;
+        }
+        
+        .instruction-popup {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .instruction-content {
+            background: white;
+            max-width: 400px;
+            padding: 30px;
+            border-radius: 20px;
+        }
+        
+        .close-btn {
+            float: right;
+            font-size: 1.5em;
+            cursor: pointer;
+        }
+        
+        .footer {
+            background: #1a1a2e;
+            color: #aaa;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        @media (max-width: 768px) {
+            .header h1 { font-size: 1.5em; }
+            .price-banner .price { font-size: 2em; }
+            .content { padding: 20px; }
+            .btn { display: block; margin: 10px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <h1>📊 Master Excel Calculator System</h1>
+        <p>10 Professional Calculators in 1 File</p>
+    </div>
+    
+    <div class="price-banner">
+        <div>🔥 EARLY BIRD OFFER 🔥</div>
+        <div class="price">$199 USD</div>
+        <div class="original">Regular: $369</div>
+        <div>💎 36 of 50 copies remaining</div>
+    </div>
+    
+    <div class="content">
+        <!-- BUTTONS -->
+        <div style="text-align: center; margin: 30px 0;">
+            <a href="demo_calculator.xlsx" class="btn btn-demo" download="demo_calculator.xlsx">📥 Download FREE Demo</a>
+            <a href="#" class="btn btn-buy" onclick="contactForPayment()">💎 Buy Now - $199</a>
+            <a href="#" class="btn btn-instruction" onclick="showInstructions()">📋 Instructions</a>
+        </div>
+        
+        <h2 class="section-title">🎯 FREE Demo Includes</h2>
+        <div class="calculator-grid">
+            <div class="calculator-card">
+                <div class="calculator-icon">💰</div>
+                <h3>Stock Calculator</h3>
+                <p>Enter quantity, cost, price - profit auto-calculates</p>
             </div>
-            
-            <!-- PAYMENT                 <li>✓ Unique Software License Number</li>
-                <li>✓ 12-Month Warranty Certificate</li>
-                <li>✓ Lifetime Updates Guarantee</li>
-                <li>✓ Priority Email Support (30 days)</li>
-                <li>✓ Software Download Link</li>
-            </ul>
-            
-            <h3>🔒 SECURITY:</h3>
-            <ul style="margin: 10px 0 20px 20px;">
-                <li>✓ 256-bit SSL Encryption</li>
-                <li>✓ PCI Compliant</li>
-                <li>✓ Your data is safe</li>
-                <li>✓ Name added to licensed users database</li>
-            </ul>
-            
-            <button class="btn" style="width: 100%;" onclick="closeInstructions()">Got it!</button>
+            <div class="calculator-card">
+                <div class="calculator-icon">🎯</div>
+                <h3>Percentage Calculator</h3>
+                <p>Discount, tax, tip - results instantly</p>
+            </div>
+        </div>
+        
+        <h2 class="section-title">💎 Full Version (10 Calculators)</h2>
+        <div class="calculator-grid">
+            <div class="calculator-card">💰 Stock Inventory</div>
+            <div class="calculator-card">👥 Demography</div>
+            <div class="calculator-card">📈 Statistics</div>
+            <div class="calculator-card">💳 Finance</div>
+            <div class="calculator-card">🧮 Math Solver</div>
+            <div class="calculator-card">📐 Geometry</div>
+            <div class="calculator-card">🎯 Percentage</div>
+            <div class="calculator-card">📉 Trend Analysis</div>
+            <div class="calculator-card">⚖️ Unit Converter</div>
+            <div class="calculator-card">🏠 INDEX Dashboard</div>
+        </div>
+        
+        <h2 class="section-title">💳 Payment Methods</h2>
+        <div class="calculator-grid">
+            <div class="calculator-card">💳 Credit/Debit Card</div>
+            <div class="calculator-card">🏦 Western Union</div>
+            <div class="calculator-card">🪙 Crypto (BTC/USDT/ETH)</div>
+            <div class="calculator-card">🏛️ Bank Transfer</div>
+        </div>
+        
+        <div style="text-align: center; padding: 20px; background: #f0fdf4; border-radius: 15px;">
+            <span>🏆 7-Day Money-Back Guarantee</span>
         </div>
     </div>
     
-    <script>
-        function showInstructions() {
-            document.getElementById('instructionPopup').style.display = 'flex';
-        }
-        
-        function closeInstructions() {
-            document.getElementById('instructionPopup').style.display = 'none';
-        }
-        
-        function contactForPayment() {
-            alert("📞 TO PURCHASE:\n\nEmail: seliim.ahmed@gmail.com\n\nPlease provide:\n1. Your full name\n2. Preferred payment method (Card/WU/Crypto/Bank)\n3. Your email for delivery\n\nYou will receive:\n✅ Payment link or instructions\n✅ Digital Certificate after payment\n✅ Software download link\n\nThank you! 🙏");
-        }
-        
-        // Close popup when clicking outside
-        window.onclick = l
+    <div class="footer">
+        <p>© 2026 Seliim Ahmed | seliim.ahmed@gmail.com</p>
+        <p><a href="#" onclick="showInstructions()" style="color:#4CAF50;">Instructions</a> | <a href="LICENSE" style="color:#4CAF50;">License</a></p>
+    </div>
+</div>
+
+<!-- POPUP -->
+<div id="instructionPopup" class="instruction-popup">
+    <div class="instruction-content">
+        <span class="close-btn" onclick="closeInstructions()">&times;</span>
+        <h2>📋 How to Buy</h2>
+        <p><strong>Payment Methods:</strong></p>
+        <ul>
+            <li>Credit/Debit Card</li>
+            <li>Western Union</li>
+            <li>Crypto (BTC/USDT/ETH)</li>
+            <li>Bank Transfer</li>
+        </ul>
+        <p><strong>To Purchase:</strong><br>Email: seliim.ahmed@gmail.com</p>
+        <p><strong>After Payment You Get:</strong></p>
+        <ul>
+            <li>Digital Certificate</li>
+            <li>License Number</li>
+            <li>Warranty Certificate</li>
+            <li>Software Download</li>
+        </ul>
+        <button class="btn btn-buy" onclick="closeInstructions()" style="width:100%">Close</button>
+    </div>
+</div>
+
+<script>
+    function showInstructions() {
+        document.getElementById('instructionPopup').style.display = 'flex';
+    }
+    function closeInstructions() {
+        document.getElementById('instructionPopup').style.display = 'none';
+    }
+    function contactForPayment() {
+        alert("📞 Email seliim.ahmed@gmail.com\n\nProvide:\n1. Your name\n2. Payment method\n3. Email for delivery");
+    }
+</script>
+
+</body>
+</html>
