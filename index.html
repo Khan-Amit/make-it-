@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>MAKE-IT · Software Writer</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #8B0000;
+            font-family: 'Courier New', monospace;
+            color: #000000;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: #f5f5dc;
+            border-radius: 24px;
+            border: 2px solid #FFD700;
+            overflow: hidden;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+
+        .header {
+            background: #8B0000;
+            padding: 16px 20px;
+            border-bottom: 2px solid #FFD700;
+            text-align: center;
+        }
+
+        .header h1 {
+            color: #FFD700;
+            font-size: 1.8rem;
+        }
+
+        .nav-links {
+            background: #8B0000;
+            padding: 10px 20px;
+            text-align: center;
+            border-bottom: 1px solid #FFD700;
+        }
+
+        .nav-links a {
+            color: #FFD700;
+            text-decoration: none;
+            margin: 0 15px;
+            font-weight: bold;
+            font-size: 1rem;
+        }
+
+        .nav-links a:hover {
+            text-decoration: underline;
+        }
+
+        .step-area {
+            background: #f5f5dc;
+            padding: 20px;
+        }
+
+        .step-title {
+            color: #000000;
+            font-size: 1.2rem;
+            margin-bottom: 16px;
+            font-weight: bold;
+        }
+
+        .step-guide {
+            background: #e0e0c0;
+            padding: 12px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            color: #000000;
+            font-size: 0.9rem;
+            border-left: 4px solid #FFD700;
+        }
+
+        textarea {
+            width: 100%;
+            background: #ffffff;
+            border: 2px solid #8B0000;
+            color: #000000;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            padding: 12px;
+            border-radius: 12px;
+            resize: vertical;
+            margin-bottom: 16px;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin: 16px 0;
+        }
+
+        button {
+            background: #FFD700;
+            border: none;
+            color: #000000;
+            padding: 10px 24px;
+            border-radius: 40px;
+            cursor: pointer;
+            font-family: monospace;
+            font-size: 1rem;
+            font-weight: bold;
+            transition: 0.2s;
+        }
+
+        button:hover {
+            background: #e6c200;
+            transform: translateY(-2px);
+        }
+
+        .output-area {
+            background: #f5f5dc;
+            padding: 20px;
+            border-top: 1px solid #d4c9a3;
+        }
+
+        .output-area pre {
+            background: #ffffff;
+            padding: 16px;
+            border-radius: 12px;
+            overflow-x: auto;
+            font-size: 0.8rem;
+            color: #000000;
+            white-space: pre-wrap;
+            word-break: break-all;
+            border: 1px solid #8B0000;
+        }
+
+        .footer {
+            padding: 12px;
+            text-align: center;
+            font-size: 0.7rem;
+            color: #000000;
+            background: #f5f5dc;
+            border-top: 1px solid #d4c9a3;
+        }
+
+        .note-popup {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #FFD700;
+            color: #000000;
+            padding: 12px 20px;
+            border-radius: 40px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            cursor: pointer;
+            z-index: 1000;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            transition: 0.2s;
+        }
+
+        .note-popup:hover {
+            background: #e6c200;
+        }
+
+        .note-panel {
+            position: fixed;
+            bottom: 80px;
+            right: 20px;
+            width: 280px;
+            background: #f5f5dc;
+            border: 2px solid #FFD700;
+            border-radius: 16px;
+            padding: 16px;
+            display: none;
+            z-index: 1001;
+            box-shadow: 0 10px 25px -5px rgba(0,0,0,0.5);
+        }
+
+        .note-panel.show {
+            display: block;
+        }
+
+        .note-panel textarea {
+            width: 100%;
+            margin-bottom: 8px;
+            font-size: 0.8rem;
+            border-color: #8B0000;
+        }
+
+        .close-note {
+            background: #8B0000;
+            color: white;
+            padding: 4px 12px;
+            font-size: 0.7rem;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <h1>⚡ MAKE-IT · Software Writer</h1>
+    </div>
+    <div class="nav-links">
+        <a href="README.md" target="_blank">📘 README</a>
+        <a href="LICENSE" target="_blank">⚖️ LICENSE</a>
+    </div>
+
+    <div class="step-area">
+        <div class="step-title">📝 Step 1: Describe what you want to build</div>
+        <div class="step-guide">
+            💡 Example: "A Python function that adds two numbers and prints the result."<br>
+            Be specific. Keep it small.
+        </div>
+        <textarea id="userPrompt" rows="3" placeholder="Example: Write a Python function that adds two numbers..."></textarea>
+
+        <div class="button-group">
+            <button id="generateBtn">✨ Generate Software</button>
+            <button id="clearBtn">🗑️ Clear</button>
+            <button id="copyBtn">📋 Copy Code</button>
+        </div>
+    </div>
+
+    <div class="output-area">
+        <div class="step-title">📄 Generated Software</div>
+        <pre id="codeOutput">// Your generated code will appear here</pre>
+    </div>
+
+    <div class="footer">
+        🔒 Proprietary Software · Copyright © 2026 Seliim Ahmed · All Rights Reserved
+    </div>
+</div>
+
+<div class="note-popup" id="notePopup">📝 Notes & Guide</div>
+<div class="note-panel" id="notePanel">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+        <span style="color: #000000; font-weight: bold;">📌 My Notes</span>
+        <button id="closeNoteBtn" class="close-note">✖</button>
+    </div>
+    <textarea id="userNote" rows="4" placeholder="Write your own notes here..."></textarea>
+    <button id="saveNoteBtn" style="width:100%; margin-top:8px; background:#FFD700; color:#000000;">💾 Save Note</button>
+</div>
+
+<script>
+    // DOM elements
+    const userPrompt = document.getElementById('userPrompt');
+    const generateBtn = document.getElementById('generateBtn');
+    const clearBtn = document.getElementById('clearBtn');
+    const copyBtn = document.getElementById('copyBtn');
+    const codeOutput = document.getElementById('codeOutput');
+    const notePopup = document.getElementById('notePopup');
+    const notePanel = document.getElementById('notePanel');
+    const closeNoteBtn = document.getElementById('closeNoteBtn');
+    const userNote = document.getElementById('userNote');
+    const saveNoteBtn = document.getElementById('saveNoteBtn');
+
+    // Load saved note from localStorage
+    const savedNote = localStorage.getItem('makeit_note');
+    if (savedNote) {
+        userNote.value = savedNote;
+    }
+
+    // Generate code based on prompt (simple templates)
+    function generateCode(promptText) {
+        const lowerPrompt = promptText.toLowerCase();
+        
+        if (lowerPrompt.includes('python') || lowerPrompt.includes('function') || lowerPrompt.includes('add')) {
+            return `# Python script generated by MAKE-IT
+# Based on: ${promptText}
+
+def add_numbers(a, b):
+    """Return the sum of two numbers."""
+    return a + b
+
+if __name__ == "__main__":
+    result = add_numbers(5, 3)
+    print(f"The sum is: {result}")
+`;
+        } else if (lowerPrompt.includes('read') && lowerPrompt.includes('file')) {
+            return `# Python script to read a file
+# Based on: ${promptText}
+
+def read_file(filename):
+    try:
+        with open(filename, 'r') as f:
+            return f.read()
+    except FileNotFoundError:
+        return f"Error: File '{filename}' not found."
+
+if __name__ == "__main__":
+    content = read_file('example.txt')
+    print(content)
+`;
+        } else if (lowerPrompt.includes('web') || lowerPrompt.includes('html')) {
+            return `<!DOCTYPE html>
+<html>
+<head>
+    <title>Generated by MAKE-IT</title>
+</head>
+<body>
+    <h1>Hello from Marduk</h1>
+    <p>Based on: ${promptText}</p>
+</body>
+</html>`;
+        } else {
+            return `# Generic template for: ${promptText}
+# Modify as needed
+
+def main():
+    print("Starting software...")
+    # Your logic here
+
+if __name__ == "__main__":
+    main()
+`;
+        }
+    }
+
+    generateBtn.addEventListener('click', () => {
+        const prompt = userPrompt.value.trim();
+        if (!prompt) {
+            codeOutput.textContent = '// Please describe what you want to build in the box above.';
+            return;
+        }
+        const code = generateCode(prompt);
+        codeOutput.textContent = code;
+    });
+
+    clearBtn.addEventListener('click', () => {
+        userPrompt.value = '';
+        codeOutput.textContent = '// Your generated code will appear here';
+    });
+
+    copyBtn.addEventListener('click', () => {
+        const code = codeOutput.textContent;
+        if (code && code !== '// Your generated code will appear here') {
+            navigator.clipboard.writeText(code).then(() => {
+                const originalText = copyBtn.textContent;
+                copyBtn.textContent = '✅ Copied!';
+                setTimeout(() => { copyBtn.textContent = originalText; }, 1500);
+            }).catch(() => {
+                alert('Could not copy. Select and copy manually.');
+            });
+        } else {
+            alert('No code to copy. Generate something first.');
+        }
+    });
+
+    // Note popup logic
+    notePopup.addEventListener('click', () => {
+        notePanel.classList.toggle('show');
+    });
+
+    closeNoteBtn.addEventListener('click', () => {
+        notePanel.classList.remove('show');
+    });
+
+    saveNoteBtn.addEventListener('click', () => {
+        const note = userNote.value;
+        localStorage.setItem('makeit_note', note);
+        alert('Note saved!');
+        notePanel.classList.remove('show');
+    });
+
+    // Close note panel if clicking outside
+    document.addEventListener('click', (e) => {
+        if (!notePanel.contains(e.target) && !notePopup.contains(e.target)) {
+            notePanel.classList.remove('show');
+        }
+    });
+</script>
+</body>
+</html>
