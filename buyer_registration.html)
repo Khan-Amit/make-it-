@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buyer Registration - Master Excel Calculator System</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 30px;
+            box-shadow: 0 25px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #1B5E20, #0D3B0F);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+        
+        .price {
+            font-size: 2.5em;
+            font-weight: bold;
+            margin: 15px 0;
+        }
+        
+        .content {
+            padding: 40px;
+        }
+        
+        .form-group {
+            margin-bottom: 25px;
+        }
+        
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 8px;
+            color: #333;
+        }
+        
+        input, select, textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            font-size: 1em;
+            transition: border-color 0.3s;
+        }
+        
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: #1B5E20;
+        }
+        
+        .row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        
+        .btn {
+            width: 100%;
+            background: linear-gradient(135deg, #1B5E20, #2E7D32);
+            color: white;
+            padding: 15px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.2em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+        
+        .btn:hover {
+            transform: scale(1.02);
+        }
+        
+        .note {
+            background: #f0fdf4;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            font-size: 0.9em;
+            color: #555;
+        }
+        
+        @media (max-width: 600px) {
+            .row { grid-template-columns: 1fr; gap: 0; }
+            .content { padding: 25px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📊 Complete Your Purchase</h1>
+            <p>Master Excel Calculator System</p>
+            <div class="price">$199 USD</div>
+            <p>🔥 Early Bird Price · 36 copies remaining</p>
+        </div>
+        
+        <div class="content">
+            <form id="registrationForm">
+                <div class="form-group">
+                    <label>👤 Full Name *</label>
+                    <input type="text" id="fullName" required placeholder="Enter your full name as you want on certificate">
+                </div>
+                
+                <div class="row">
+                    <div class="form-group">
+                        <label>📧 Email Address *</label>
+                        <input type="email" id="email" required placeholder="Your email for delivery">
+                    </div>
+                    <div class="form-group">
+                        <label>📞 Phone Number *</label>
+                        <input type="tel" id="phone" required placeholder="For support and verification">
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label>📍 Full Address *</label>
+                    <textarea id="address" rows="3" required placeholder="Street address, city, state, postal code, country"></textarea>
+                </div>
+                
+                <div class="row">
+                    <div class="form-group">
+                        <label>🏙️ City *</label>
+                        <input type="text" id="city" required>
+                    </div>
+                    <div class="form-group">
+                        <label>🌍 Country *</label>
+                        <input type="text" id="country" required>
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <div class="form-group">
+                        <label>📜 How did you hear about us?</label>
+                        <select id="referral">
+                            <option value="">Select an option</option>
+                            <option>Facebook</option>
+                            <option>LinkedIn</option>
+                            <option>WhatsApp</option>
+                            <option>Google Search</option>
+                            <option>Friend/Colleague</option>
+                            <option>Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>💳 Payment Method</label>
+                        <select id="paymentMethod" required>
+                            <option value="">Select payment method</option>
+                            <option>Credit Card (Visa/MasterCard)</option>
+                            <option>Debit Card</option>
+                            <option>PayPal</option>
+                            <option>Bank Transfer</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label>
+                        <input type="checkbox" id="agree" required>
+                        I agree to the <a href="#" target="_blank">Terms & Conditions</a> and <a href="#" target="_blank">License Agreement</a>
+                    </label>
+                </div>
+                
+                <button type="button" class="btn" onclick="processPurchase()">💎 PROCEED TO PAYMENT - $199</button>
+            </form>
+            
+            <div class="note">
+                <strong>📋 What you'll receive after purchase:</strong><br><br>
+                ✅ Digital Certificate with your name and unique license number<br>
+                ✅ 12-Month Warranty Certificate<br>
+                ✅ Software download link (Master Excel Calculator System)<br>
+                ✅ Installation & setup guide<br>
+                ✅ Lifetime updates guarantee<br>
+                ✅ Priority email support for 30 days<br><br>
+                <strong>🔒 Your information is secure and will be added to our licensed users database.</strong>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        function processPurchase() {
+            // Get form values
+            const fullName = document.getElementById('fullName').value;
+            const email = document.getElementById('email').value;
+            const phone = document.getElementById('phone').value;
+            const address = document.getElementById('address').value;
+            const city = document.getElementById('city').value;
+            const country = document.getElementById('country').value;
+            const paymentMethod = document.getElementById('paymentMethod').value;
+            const agree = document.getElementById('agree').checked;
+            
+            // Validation
+            if (!fullName || !email || !phone || !address || !city || !country || !paymentMethod || !agree) {
+                alert('❌ Please fill in all required fields and agree to the terms.');
+                return;
+            }
+            
+            // Generate unique license number
+            const licenseNumber = 'MECS-' + new Date().getFullYear() + '-' + Math.floor(Math.random() * 10000).toString().padStart(4, '0');
+            const orderId = 'ORD-' + Date.now();
+            
+            // Store buyer data (in real app, this sends to server)
+            const buyerData = {
+                licenseNumber: licenseNumber,
+                orderId: orderId,
+                fullName: fullName,
+                email: email,
+                phone: phone,
+                address: address,
+                city: city,
+                country: country,
+                paymentMethod: paymentMethod,
+                purchaseDate: new Date().toISOString(),
+                warrantyExpiry: new Date(Date.now() + 365 * 24 * 60 * 60 * 1000).toISOString()
+            };
+            
+            // Save to localStorage (for demo)
+            localStorage.setItem('buyerData', JSON.stringify(buyerData));
+            
+            // Redirect to payment
+            alert(`✅ Registration Complete!\n\nOrder ID: ${orderId}\nLicense Number: ${licenseNumber}\n\nYou will now be redirected to secure payment.`);
+            
+            // In real implementation, redirect to payment gateway
+            window.location.href = `certificate.html?license=${licenseNumber}&name=${encodeURIComponent(fullName)}`;
+        }
+    </script>
+</body>
+</html>
