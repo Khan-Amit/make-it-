@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Digital Certificate - Master Excel Calculator System</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+        
+        .certificate {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 25px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .certificate-header {
+            background: linear-gradient(135deg, #1B5E20, #0D3B0F);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .certificate-body {
+            padding: 40px;
+            text-align: center;
+        }
+        
+        .seal {
+            width: 100px;
+            height: 100px;
+            background: #FFD700;
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3em;
+        }
+        
+        .license-number {
+            background: #f5f5f5;
+            padding: 10px;
+            border-radius: 10px;
+            font-family: monospace;
+            font-size: 1.2em;
+            margin: 20px 0;
+        }
+        
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            text-align: left;
+            margin: 30px 0;
+            padding: 20px;
+            background: #f9f9f9;
+            border-radius: 15px;
+        }
+        
+        .info-item {
+            margin: 10px 0;
+        }
+        
+        .info-label {
+            font-weight: bold;
+            color: #1B5E20;
+        }
+        
+        .warranty {
+            background: #f0fdf4;
+            padding: 20px;
+            border-radius: 15px;
+            margin: 20px 0;
+            border-left: 4px solid #4CAF50;
+        }
+        
+        .btn {
+            display: inline-block;
+            background: #1B5E20;
+            color: white;
+            padding: 12px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            margin: 10px;
+        }
+        
+        .footer {
+            background: #f5f5f5;
+            padding: 20px;
+            text-align: center;
+            font-size: 0.8em;
+            color: #666;
+        }
+        
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            .btn { display: none; }
+            .no-print { display: none; }
+        }
+    </style>
+</head>
+<body>
+    <div class="certificate">
+        <div class="certificate-header">
+            <h1>📊 MASTER EXCEL CALCULATOR SYSTEM</h1>
+            <p>Official License & Warranty Certificate</p>
+        </div>
+        
+        <div class="certificate-body" id="certificateContent">
+            <div class="seal">✅</div>
+            <h2>CERTIFICATE OF AUTHENTICITY</h2>
+            <p>This certifies that</p>
+            <h1 style="color: #1B5E20; margin: 15px 0;" id="userName">[User Name]</h1>
+            <p>is a licensed owner of</p>
+            <h3>Master Excel Calculator System v2.0</h3>
+            
+            <div class="license-number">
+                License Number: <strong id="licenseNumber">MECS-2026-XXXX</strong>
+            </div>
+            
+            <div class="info-grid">
+                <div class="info-item"><span class="info-label">📅 Purchase Date:</span> <span id="purchaseDate">-</span></div>
+                <div class="info-item"><span class="info-label">📧 Email:</span> <span id="userEmail">-</span></div>
+                <div class="info-item"><span class="info-label">📍 Location:</span> <span id="userLocation">-</span></div>
+                <div class="info-item"><span class="info-label">🆔 Order ID:</span> <span id="orderId">-</span></div>
+            </div>
+            
+            <div class="warranty">
+                <strong>🔧 12-MONTH WARRANTY CERTIFICATE</strong><br><br>
+                This software is warranted against defects for 12 months from purchase date.
+                <br><br>
+                <strong>Warranty Period:</strong> <span id="warrantyPeriod">-</span><br>
+                <strong>Support Includes:</strong> Technical support, updates, and bug fixes
+            </div>
+            
+            <div class="info-grid">
+                <div class="info-item"><span class="info-label">✅ Product Status:</span> Active Licensed</div>
+                <div class="info-item"><span class="info-label">🔄 Updates:</span> Lifetime Free</div>
+                <div class="info-item"><span class="info-label">📞 Support:</span> 30 Days Priority</div>
+                <div class="info-item"><span class="info-label">💎 License Type:</span> Individual/Personal</div>
+            </div>
+            
+            <div style="margin: 30px 0;">
+                <button class="btn" onclick="window.print()">🖨️ Print Certificate</button>
+                <button class="btn" onclick="downloadCertificate()">📥 Download PDF</button>
+                <a href="index.html" class="btn">🏠 Back to Home</a>
+            </div>
+            
+            <div style="margin-top: 30px; padding-top: 20px; border-top: 2px solid #ddd;">
+                <img src="" alt="Authorized Signature" style="max-width: 200px;">
+                <p><strong>Seliim Ahmed</strong><br>Authorized Software Provider</p>
+                <p style="font-size: 0.8em;">Digitally Signed & Verified</p>
+            </div>
+        </div>
+        
+        <div class="footer">
+            This certificate is digitally verified. Software use subject to license agreement.<br>
+            For verification, contact: seliim.ahmed@gmail.com
+        </div>
+    </div>
+    
+    <script>
+        // Get data from URL or localStorage
+        const urlParams = new URLSearchParams(window.location.search);
+        const licenseFromUrl = urlParams.get('license');
+        const nameFromUrl = urlParams.get('name');
+        
+        // Try to get from localStorage first
+        let buyerData = localStorage.getItem('buyerData');
+        
+        if (buyerData) {
+            buyerData = JSON.parse(buyerData);
+            document.getElementById('userName').innerText = buyerData.fullName;
+            document.getElementById('licenseNumber').innerText = buyerData.licenseNumber;
+            document.getElementById('userEmail').innerText = buyerData.email;
+            document.getElementById('userLocation').innerText = `${buyerData.city}, ${buyerData.country}`;
+            document.getElementById('orderId').innerText = buyerData.orderId;
+            document.getElementById('purchaseDate').innerText = new Date(buyerData.purchaseDate).toLocaleDateString();
+            document.getElementById('warrantyPeriod').innerText = `${new Date(buyerData.purchaseDate).toLocaleDateString()} to ${new Date(buyerData.warrantyExpiry).toLocaleDateString()}`;
+        } else if (licenseFromUrl && nameFromUrl) {
+            document.getElementById('userName').innerText = decodeURIComponent(nameFromUrl);
+            document.getElementById('licenseNumber').innerText = licenseFromUrl;
+            document.getElementById('purchaseDate').innerText = new Date().toLocaleDateString();
+            document.getElementById('warrantyPeriod').innerText = `${new Date().toLocaleDateString()} to ${new Date(Date.now() + 365*24*60*60*1000).toLocaleDateString()}`;
+        }
+        
+        function downloadCertificate() {
+            alert("📥 Certificate is ready to save!\n\nRight-click and select 'Save as PDF' or 'Print' to save as PDF.\n\nThank you for your purchase!");
+            window.print();
+        }
+    </script>
+</body>
+</html>
