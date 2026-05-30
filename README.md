@@ -56,3 +56,21 @@ python master_calculator_final.py
 
 # 3. Open the generated Excel file
 # 4. Click the 🏠 INDEX sheet to begin
+
+Plan Price
+Early Bird (First 50) $199 USD
+Regular Price $369 USD
+Commercial License Contact for pricing
+
+my_calculator.xlsx
+├── 🏠 INDEX        (Dashboard - Start here)
+├── 💰 STOCK        (Inventory calculator)
+├── 👥 DEMOGRAPHY   (Population stats)
+├── 📈 STATISTICS   (Data analysis)
+├── 💳 FINANCE      (Budget tracker)
+├── 🧮 MATH         (Basic operations)
+├── 📐 GEOMETRY     (Area & volume)
+├── 🎯 PERCENTAGE   (% calculator)
+├── 📉 TREND        (Sales analysis)
+└── ⚖️ UNIT         (Unit converter)
+
