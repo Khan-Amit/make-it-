@@ -19,82 +19,40 @@ seliim.ahmed@gmail.com
 thanks 🙏 🙏 🙏 
 ---
 
-## ⚠️ IMPORTANT NOTICE
-
-This software is the exclusive intellectual property of Seliim Ahmed.
-
-- **No use without written permission.** See LICENSE for complete terms.
-- **Unauthorized access, copying, or distribution is strictly prohibited.**
-- **Violators will be pursued to the fullest extent of the law.**
-
----
-
-## 📝 What This Tool Does
-
-A simple HTML‑based assistant that helps you write small software templates.  
-
-Describe what you want to build (e.g., "Python function to add numbers"), and the tool generates a template code snippet.
-
-**Features:**
-- Generate code templates (Python, HTML, generic)
-- Copy generated code to clipboard
-- Persistent notes (saved in your browser)
-- Clean, dark‑theme interface
-- Works offline – no internet required
-
----
-
-## 🛡️ License Summary (Read the Full LICENSE)
-
-| You may | You may NOT |
-|---------|-------------|
-| ✅ Use the software for your own personal, offline, non‑commercial purposes | ❌ Distribute, sell, or sublicense the software |
-| ✅ Save and run the HTML file locally | ❌ Modify, reverse engineer, or create derivative works |
-| ✅ Take notes using the built‑in note panel | ❌ Remove copyright or license notices |
-| | ❌ Use the software to train any AI or machine learning model |
-| | ❌ Share the source code publicly without written permission |
-
-**For commercial use, redistribution, or any other permission:**  
-Contact `seliim.ahmed@gmail.com`
-
----
-
-## 🚀 Quick Start
-
-1. Save `software_writer.html` to your computer or phone.
-2. Open the file in any web browser (Chrome, Firefox, Safari, etc.).
-3. Describe a small software task in the text box.
-4. Click **Generate Software**.
-5. Copy the generated code using the **Copy Code** button.
-6. Use the floating **Notes & Guide** icon to save personal notes.
-
----
-
-## 📁 File Structure
-
-
-
+## ⚠️ IMPORTANT Notice 
 # 📊 Master Excel Calculator System
 
-A complete suite of professional calculators that generates an Excel file with 10+ calculator sheets.
+## Professional All-in-One Calculator Suite
+
+A complete Excel-based system with 10 professional calculators that auto-calculate. Perfect for business owners, analysts, accountants, teachers, and students.
+
+---
 
 ## 🎯 Features
 
 | Calculator | Description |
 |------------|-------------|
-| 💰 Stock Inventory | Calculate value, profit, and margins |
+| 💰 Stock Inventory | Track value, cost & profit margins |
 | 👥 Demography | Population analysis by age/gender |
 | 📈 Statistics | Mean, median, sum calculations |
-| 💳 Finance | Income, expense, balance tracker |
-| 🧮 Math | Basic arithmetic operations |
-| 📐 Geometry | Area and volume of shapes |
+| 💳 Finance | Income, expense & balance tracker |
+| 🧮 Math Solver | Addition, subtraction, multiplication, division |
+| 📐 Geometry | Area & volume of shapes |
 | 🎯 Percentage | Discounts, tax, tips, margins |
-| 📉 Trend | Sales growth and moving averages |
-| ⚖️ Unit | Convert between different units |
-| 🏠 Index | Main dashboard with navigation |
+| 📉 Trend Analysis | Sales growth & moving averages |
+| ⚖️ Unit Converter | Length, weight, time, temperature |
+| 🏠 INDEX Dashboard | Central navigation hub |
+
+---
 
 ## 🚀 Quick Start
 
-### 1. Install Requirements
 ```bash
+# 1. Install required packages
 pip install pandas openpyxl
+
+# 2. Run the script
+python master_calculator_final.py
+
+# 3. Open the generated Excel file
+# 4. Click the 🏠 INDEX sheet to begin
