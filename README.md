@@ -5,7 +5,18 @@ Learning software # Software Writer · Marduk Guide
 **Contact:** seliim.ahmed@gmail.com  
 **Version:** 1.0 (May 30, 2026)  
 **License:** SOVEREIGN PROPRIETARY – see LICENSE file
-
+this will be priced at
+USD 369.00 or equivalent local currency 
+for individual or personal use
+gor corporate use 
+mail us
+you Will get a digital lisence 
+and
+added to the list of licensed list 
+for user permission 
+send the email to 
+seliim.ahmed@gmail.com 
+thanks 🙏 🙏 🙏 
 ---
 
 ## ⚠️ IMPORTANT NOTICE
@@ -61,3 +72,29 @@ Contact `seliim.ahmed@gmail.com`
 
 ## 📁 File Structure
 
+
+
+# 📊 Master Excel Calculator System
+
+A complete suite of professional calculators that generates an Excel file with 10+ calculator sheets.
+
+## 🎯 Features
+
+| Calculator | Description |
+|------------|-------------|
+| 💰 Stock Inventory | Calculate value, profit, and margins |
+| 👥 Demography | Population analysis by age/gender |
+| 📈 Statistics | Mean, median, sum calculations |
+| 💳 Finance | Income, expense, balance tracker |
+| 🧮 Math | Basic arithmetic operations |
+| 📐 Geometry | Area and volume of shapes |
+| 🎯 Percentage | Discounts, tax, tips, margins |
+| 📉 Trend | Sales growth and moving averages |
+| ⚖️ Unit | Convert between different units |
+| 🏠 Index | Main dashboard with navigation |
+
+## 🚀 Quick Start
+
+### 1. Install Requirements
+```bash
+pip install pandas openpyxl
