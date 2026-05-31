@@ -3,138 +3,364 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JStL Master Excel Calculator System</title>
+    <title>Make It JStL Spreadsheet</title>
     <style>
         *{box-sizing:border-box}
         body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background:#0a1a2f;margin:0;padding:20px}
-        .container{max-width:1200px;margin:auto;background:#0d2b3e;border-radius:16px;box-shadow:0 8px 20px rgba(0,0,0,0.3);overflow:hidden}
+        .container{max-width:1300px;margin:auto;background:#0d2b3e;border-radius:16px;box-shadow:0 8px 20px rgba(0,0,0,0.3);overflow:hidden}
         .header{background:#071a2b;padding:30px;text-align:center;border-bottom:1px solid #1e4a6e}
         .header h1{margin:0;color:#7abfef;font-size:28px}
         .header p{margin:10px 0 0;color:#6a9ec0}
-        .demo-area{background:#0a2a3a;margin:20px;padding:20px;border-radius:12px;text-align:center}
-        .demo-area a{background:#1e5a7a;color:white;padding:12px 24px;text-decoration:none;border-radius:8px;display:inline-block;margin:10px}
-        .demo-area a:hover{background:#2a6f94}
-        .features{display:flex;flex-wrap:wrap;gap:20px;padding:20px;margin:0 20px}
-        .feature-card{flex:1;min-width:200px;background:#0a2a3a;padding:20px;border-radius:12px;text-align:center}
-        .feature-card h3{color:#7abfef;margin:0 0 10px}
-        .feature-card p{color:#b8e0ff;margin:0}
-        .payment-section{background:#0a2a3a;margin:20px;padding:20px;border-radius:12px}
-        .payment-section h3{color:#7abfef;margin-top:0}
-        .payment-methods{display:flex;flex-wrap:wrap;gap:15px;margin-top:15px}
-        .method{background:#0f2e44;padding:12px;border-radius:8px;flex:1;text-align:center}
-        .method strong{color:#9fd3ff}
-        .social-links{display:flex;gap:15px;justify-content:center;margin-top:20px}
-        .social-links a{color:#7abfef;text-decoration:none}
-        .license-text{background:#0a2a3a;margin:20px;padding:20px;border-radius:12px;font-family:monospace;font-size:12px;color:#9fd3ff}
-        .footer{background:#071a2b;padding:15px;text-align:center;color:#6a9ec0;font-size:12px}
-        button, .download-btn{background:#1e5a7a;color:white;border:none;padding:10px 20px;border-radius:6px;cursor:pointer;font-size:14px;text-decoration:none;display:inline-block}
-        button:hover, .download-btn:hover{background:#2a6f94}
-        input, textarea{background:#1a3f55;color:white;border:1px solid #2a5a7a;padding:8px;border-radius:6px;width:100%;margin-top:5px}
-        .contact-form{background:#0a2a3a;margin:20px;padding:20px;border-radius:12px}
-        .contact-form input{width:calc(100% - 20px)}
+        .content{padding:20px}
+        .country-bar{background:#0a2a3a;padding:20px;border-radius:12px;margin-bottom:20px;display:flex;gap:15px;flex-wrap:wrap;align-items:center}
+        .country-bar select{background:#1a3f55;color:white;border:1px solid #2a5a7a;padding:10px 20px;border-radius:8px;font-size:16px}
+        .two-columns{display:flex;flex-wrap:wrap;gap:20px}
+        .fields-panel{flex:1;background:#0a2a3a;padding:20px;border-radius:12px}
+        .results-panel{flex:1;background:#0a2a3a;padding:20px;border-radius:12px}
+        .field-group{margin-bottom:15px}
+        .field-group label{display:block;color:#b8e0ff;margin-bottom:5px;font-weight:bold}
+        .field-group input{width:100%;background:#1a3f55;color:white;border:1px solid #2a5a7a;padding:10px;border-radius:8px;font-size:14px}
+        .result-item{background:#0f2e44;padding:12px;margin-bottom:10px;border-radius:8px;color:#9fd3ff;font-family:monospace}
+        .result-item strong{color:#7abfef}
+        button{background:#1e5a7a;color:white;border:none;padding:12px 24px;border-radius:8px;cursor:pointer;font-size:16px;margin-top:10px;width:100%}
+        button:hover{background:#2a6f94}
+        .demo-buttons{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:20px}
+        .demo-buttons button{width:auto;margin:0}
+        .footer{padding:15px;background:#071a2b;text-align:center;color:#6a9ec0;font-size:12px}
+        h3{color:#7abfef;margin-top:0}
+        .license-box{background:#0a2a3a;padding:20px;border-radius:12px;margin-top:20px;font-family:monospace;font-size:12px;color:#9fd3ff}
     </style>
 </head>
 <body>
 <div class="container">
     <div class="header">
-        <h1>📊 JStL Master Excel Calculator System</h1>
-        <p>10 Professional Calculators in 1 File | Browser-Based | No Installation</p>
+        <h1>📊 Make It JStL Spreadsheet</h1>
+        <p>Your own spreadsheet system | No third-party software | Browser-based</p>
     </div>
 
-    <div class="demo-area">
-        <h3 style="color:#7abfef">🎯 Try Live Demos (Click to open in browser)</h3>
-        <a href="JSTL_Complete_System.html" target="_blank">📈 Complete System Demo</a>
-        <a href="JSTL_Multi_Country.html" target="_blank">🌍 Multi-Country Demo</a>
-        <a href="JSTL_Scenario_Builder.html" target="_blank">🎭 Scenario Builder Demo</a>
-        <a href="JSTL_Data_Storage.html" target="_blank">💾 Data Storage Demo</a>
-        <a href="JSTL_Chart_Visual.html" target="_blank">📊 Chart Visual Demo</a>
-        <a href="JSTL_Export_PDF.html" target="_blank">📑 PDF Export Demo</a>
-        <p style="color:#b8e0ff;margin-top:15px">⬇️ All demos run in your browser — no Excel needed</p>
-    </div>
-
-    <div class="features">
-        <div class="feature-card"><h3>💰 Stock Inventory</h3><p>Profit & margin calculator</p></div>
-        <div class="feature-card"><h3>👥 Demography</h3><p>Population trends</p></div>
-        <div class="feature-card"><h3>📈 Statistics</h3><p>Data analysis tools</p></div>
-        <div class="feature-card"><h3>💳 Finance</h3><p>Tax & income calculators</p></div>
-        <div class="feature-card"><h3>🧮 Math Solver</h3><p>Algebra & equations</p></div>
-        <div class="feature-card"><h3>📐 Geometry</h3><p>Area & volume</p></div>
-        <div class="feature-card"><h3>🎯 Percentage</h3><p>Discount & markup</p></div>
-        <div class="feature-card"><h3>📉 Trend Analysis</h3><p>Data visualization</p></div>
-        <div class="feature-card"><h3>⚖️ Unit Converter</h3><p>Metric & imperial</p></div>
-        <div class="feature-card"><h3>🏠 INDEX Dashboard</h3><p>All tools in one place</p></div>
-    </div>
-
-    <div class="payment-section">
-        <h3>💳 Payment & Purchase</h3>
-        <p style="color:#b8e0ff">Price: <strong style="color:#7bef7b">$199 USD</strong> (Early Bird — Limited copies)</p>
-        <div class="payment-methods">
-            <div class="method"><strong>💳 Credit/Debit Card</strong><br>Visa, MasterCard, Amex<br><span style="font-size:11px">Link sent after email</span></div>
-            <div class="method"><strong>🏦 Western Union</strong><br>Send to: Amit Khanna<br><span style="font-size:11px">Email for details</span></div>
-            <div class="method"><strong>₿ Crypto</strong><br>BTC | USDT (TRC20) | ETH<br><span style="font-size:11px">Address on request</span></div>
-            <div class="method"><strong>🏛️ Bank Transfer</strong><br>International wire<br><span style="font-size:11px">Email for invoice</span></div>
+    <div class="content">
+        <div class="demo-buttons">
+            <button id="profitDemoBtn">💰 Profit Demo</button>
+            <button id="taxDemoBtn">🧾 Tax Demo</button>
+            <button id="demographyDemoBtn">👥 Demography Demo</button>
         </div>
-        <div style="margin-top:20px;background:#0f2e44;padding:15px;border-radius:8px">
-            <p style="color:#b8e0ff;margin:0"><strong>📧 Payment confirmation & support:</strong><br>
-            amit.khanna.1082@gmail.com<br>
-            seliim.ahmed@gmail.com</p>
+
+        <div class="country-bar">
+            <label style="color:#b8e0ff;font-weight:bold">🌍 Select Country Scenario:</label>
+            <select id="countrySelect">
+                <option value="bangladesh">🇧🇩 Bangladesh</option>
+                <option value="canada">🇨🇦 Canada</option>
+                <option value="uk">🇬🇧 United Kingdom</option>
+                <option value="usa">🇺🇸 United States</option>
+                <option value="india">🇮🇳 India</option>
+            </select>
+            <button id="fillDefaultBtn" style="width:auto">📋 Load Default Values</button>
         </div>
-        <div class="social-links">
-            <a href="#" id="linkedinLink">🔗 LinkedIn (Amit Khanna)</a>
-            <a href="#" id="facebookLink">📘 Facebook (Amit Khanna)</a>
+
+        <div class="two-columns">
+            <div class="fields-panel">
+                <h3>📝 Input Fields</h3>
+                <div id="dynamicFields"></div>
+            </div>
+            <div class="results-panel">
+                <h3>📊 Calculated Results</h3>
+                <div id="resultsDisplay"></div>
+                <button id="downloadJStLBtn">⬇️ Download Make It JStL Spreadsheet</button>
+            </div>
+        </div>
+
+        <div class="license-box">
+            <strong>🎓 Make It JStL License</strong><br>
+            ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━<br>
+            Perpetual license | Full functionality guarantee | 12-month support | Lifetime updates<br>
+            Your data stays yours | No third-party sharing | Bulletproof protection<br>
+            ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━<br>
+            📧 amit.khanna.1082@gmail.com | seliim.ahmed@gmail.com
         </div>
     </div>
-
-    <div class="contact-form">
-        <h3 style="color:#7abfef">📧 Request Download Link</h3>
-        <p style="color:#b8e0ff">Enter your email to receive the full software package</p>
-        <input type="email" id="userEmail" placeholder="Your email address">
-        <button id="requestDownloadBtn" style="margin-top:10px;width:100%">📥 Request Download Link</button>
-        <div id="requestMessage" style="margin-top:10px;color:#7bef7b"></div>
-    </div>
-
-    <div class="license-text">
-        <strong>🎓 JStL SOFTWARE LICENSE</strong><br>
-        ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━<br>
-        This license grants you perpetual, non-exclusive rights to use JStL software.<br>
-        You may: use on any personal or business device, modify for internal use, share results freely.<br>
-        You may not: resell the software itself, claim ownership of the core code, distribute without attribution.<br>
-        The software is provided under full functionality guarantee. Technical support included for 12 months.<br>
-        Your purchase includes lifetime updates and priority email support.<br>
-        This license is bulletproof — your rights are fully protected.<br>
-        ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━<br>
-        <span style="color:#7bef7b">✅ 7-Day Money-Back Guarantee ✅ Lifetime Updates ✅ Priority Support</span>
-    </div>
-
     <div class="footer">
-        <p>© 2026 JStL Master System | Built with Excel logic | Runs in any browser</p>
-        <p>📁 <a href="https://github.com/khan-amit/make-it-" style="color:#7abfef" target="_blank">GitHub Repository</a> | 📄 <a href="README.md" style="color:#7abfef">README</a> | 🔒 <a href="LICENSE" style="color:#7abfef">License</a></p>
+        Make It JStL Spreadsheet | Your own calculation engine | No Excel required
     </div>
 </div>
 
 <script>
-    // Request download button - sends email request
-    document.getElementById('requestDownloadBtn').addEventListener('click', function() {
-        let email = document.getElementById('userEmail').value.trim();
-        if(!email) {
-            document.getElementById('requestMessage').innerHTML = '<span style="color:#ef7b7b">❌ Please enter your email</span>';
-            return;
+    const countries = {
+        bangladesh: {
+            name: "Bangladesh", currency: "BDT",
+            fields: [
+                { label: "Annual Income", id: "income", default: 500000 },
+                { label: "VAT Rate (%)", id: "vatRate", default: 15 },
+                { label: "Sales Tax Rate (%)", id: "salesTax", default: 5 },
+                { label: "Buy Price", id: "buyPrice", default: 500 },
+                { label: "Sell Price", id: "sellPrice", default: 750 },
+                { label: "Births per Year", id: "births", default: 100 },
+                { label: "Deaths per Year", id: "deaths", default: 120 }
+            ],
+            calculate: (vals) => {
+                let gross = vals.sellPrice - vals.buyPrice;
+                let vat = vals.sellPrice * (vals.vatRate / 100);
+                let salesTax = vals.sellPrice * (vals.salesTax / 100);
+                let netProfit = gross - vat - salesTax;
+                let margin = vals.sellPrice ? (netProfit / vals.sellPrice) * 100 : 0;
+                let tax = 0;
+                if(vals.income > 250000) tax += (Math.min(vals.income, 400000) - 250000) * 0.10;
+                if(vals.income > 400000) tax += (vals.income - 400000) * 0.25;
+                let popChange = vals.births - vals.deaths;
+                return {
+                    "Gross Profit": `${gross.toFixed(2)} ${vals.currency}`,
+                    "VAT Amount": `${vat.toFixed(2)} ${vals.currency}`,
+                    "Sales Tax": `${salesTax.toFixed(2)} ${vals.currency}`,
+                    "Net Profit": `${netProfit.toFixed(2)} ${vals.currency}`,
+                    "Profit Margin (%)": margin.toFixed(2) + "%",
+                    "Income Tax Payable": `${tax.toFixed(2)} ${vals.currency}`,
+                    "After Tax Income": `${(vals.income - tax).toFixed(2)} ${vals.currency}`,
+                    "Population Change": `${popChange > 0 ? '+' : ''}${popChange}`
+                };
+            }
+        },
+        canada: {
+            name: "Canada", currency: "CAD",
+            fields: [
+                { label: "Annual Income", id: "income", default: 60000 },
+                { label: "GST Rate (%)", id: "gstRate", default: 5 },
+                { label: "PST Rate (%)", id: "pstRate", default: 8 },
+                { label: "Buy Price", id: "buyPrice", default: 100 },
+                { label: "Sell Price", id: "sellPrice", default: 180 },
+                { label: "Births per Year", id: "births", default: 350 },
+                { label: "Deaths per Year", id: "deaths", default: 300 }
+            ],
+            calculate: (vals) => {
+                let gross = vals.sellPrice - vals.buyPrice;
+                let gst = vals.sellPrice * (vals.gstRate / 100);
+                let pst = vals.sellPrice * (vals.pstRate / 100);
+                let netProfit = gross - gst - pst;
+                let margin = vals.sellPrice ? (netProfit / vals.sellPrice) * 100 : 0;
+                let tax = 0;
+                if(vals.income > 53359) tax += (Math.min(vals.income, 106717) - 53359) * 0.205;
+                if(vals.income > 106717) tax += (Math.min(vals.income, 165430) - 106717) * 0.26;
+                if(vals.income > 165430) tax += (vals.income - 165430) * 0.29;
+                let popChange = vals.births - vals.deaths;
+                return {
+                    "Gross Profit": `${gross.toFixed(2)} ${vals.currency}`,
+                    "GST Amount": `${gst.toFixed(2)} ${vals.currency}`,
+                    "PST Amount": `${pst.toFixed(2)} ${vals.currency}`,
+                    "Net Profit": `${netProfit.toFixed(2)} ${vals.currency}`,
+                    "Profit Margin (%)": margin.toFixed(2) + "%",
+                    "Federal Tax Payable": `${tax.toFixed(2)} ${vals.currency}`,
+                    "After Tax Income": `${(vals.income - tax).toFixed(2)} ${vals.currency}`,
+                    "Population Change": `${popChange > 0 ? '+' : ''}${popChange}`
+                };
+            }
+        },
+        uk: {
+            name: "United Kingdom", currency: "GBP",
+            fields: [
+                { label: "Annual Income", id: "income", default: 40000 },
+                { label: "VAT Rate (%)", id: "vatRate", default: 20 },
+                { label: "Buy Price", id: "buyPrice", default: 50 },
+                { label: "Sell Price", id: "sellPrice", default: 100 },
+                { label: "Births per Year", id: "births", default: 700 },
+                { label: "Deaths per Year", id: "deaths", default: 600 }
+            ],
+            calculate: (vals) => {
+                let gross = vals.sellPrice - vals.buyPrice;
+                let vat = vals.sellPrice * (vals.vatRate / 100);
+                let netProfit = gross - vat;
+                let margin = vals.sellPrice ? (netProfit / vals.sellPrice) * 100 : 0;
+                let tax = 0;
+                if(vals.income > 12570) tax += (Math.min(vals.income, 50270) - 12570) * 0.20;
+                if(vals.income > 50270) tax += (vals.income - 50270) * 0.40;
+                let popChange = vals.births - vals.deaths;
+                return {
+                    "Gross Profit": `${gross.toFixed(2)} ${vals.currency}`,
+                    "VAT Amount": `${vat.toFixed(2)} ${vals.currency}`,
+                    "Net Profit": `${netProfit.toFixed(2)} ${vals.currency}`,
+                    "Profit Margin (%)": margin.toFixed(2) + "%",
+                    "Income Tax Payable": `${tax.toFixed(2)} ${vals.currency}`,
+                    "After Tax Income": `${(vals.income - tax).toFixed(2)} ${vals.currency}`,
+                    "Population Change": `${popChange > 0 ? '+' : ''}${popChange}`
+                };
+            }
+        },
+        usa: {
+            name: "United States", currency: "USD",
+            fields: [
+                { label: "Annual Income", id: "income", default: 60000 },
+                { label: "Sales Tax Rate (%)", id: "salesTax", default: 7 },
+                { label: "Buy Price", id: "buyPrice", default: 100 },
+                { label: "Sell Price", id: "sellPrice", default: 200 },
+                { label: "Births per Year", id: "births", default: 3500 },
+                { label: "Deaths per Year", id: "deaths", default: 2800 }
+            ],
+            calculate: (vals) => {
+                let gross = vals.sellPrice - vals.buyPrice;
+                let salesTax = vals.sellPrice * (vals.salesTax / 100);
+                let netProfit = gross - salesTax;
+                let margin = vals.sellPrice ? (netProfit / vals.sellPrice) * 100 : 0;
+                let tax = 0;
+                if(vals.income > 11600) tax += (Math.min(vals.income, 47150) - 11600) * 0.12;
+                if(vals.income > 47150) tax += (Math.min(vals.income, 100525) - 47150) * 0.22;
+                if(vals.income > 100525) tax += (vals.income - 100525) * 0.24;
+                let popChange = vals.births - vals.deaths;
+                return {
+                    "Gross Profit": `${gross.toFixed(2)} ${vals.currency}`,
+                    "Sales Tax Amount": `${salesTax.toFixed(2)} ${vals.currency}`,
+                    "Net Profit": `${netProfit.toFixed(2)} ${vals.currency}`,
+                    "Profit Margin (%)": margin.toFixed(2) + "%",
+                    "Federal Tax Payable": `${tax.toFixed(2)} ${vals.currency}`,
+                    "After Tax Income": `${(vals.income - tax).toFixed(2)} ${vals.currency}`,
+                    "Population Change": `${popChange > 0 ? '+' : ''}${popChange}`
+                };
+            }
+        },
+        india: {
+            name: "India", currency: "INR",
+            fields: [
+                { label: "Annual Income", id: "income", default: 800000 },
+                { label: "GST Rate (%)", id: "gstRate", default: 18 },
+                { label: "Buy Price", id: "buyPrice", default: 5000 },
+                { label: "Sell Price", id: "sellPrice", default: 8000 },
+                { label: "Births per Year", id: "births", default: 25000 },
+                { label: "Deaths per Year", id: "deaths", default: 20000 }
+            ],
+            calculate: (vals) => {
+                let gross = vals.sellPrice - vals.buyPrice;
+                let gst = vals.sellPrice * (vals.gstRate / 100);
+                let netProfit = gross - gst;
+                let margin = vals.sellPrice ? (netProfit / vals.sellPrice) * 100 : 0;
+                let tax = 0;
+                if(vals.income > 250000) tax += (Math.min(vals.income, 500000) - 250000) * 0.05;
+                if(vals.income > 500000) tax += (Math.min(vals.income, 1000000) - 500000) * 0.20;
+                if(vals.income > 1000000) tax += (vals.income - 1000000) * 0.30;
+                let popChange = vals.births - vals.deaths;
+                return {
+                    "Gross Profit": `${gross.toFixed(2)} ${vals.currency}`,
+                    "GST Amount": `${gst.toFixed(2)} ${vals.currency}`,
+                    "Net Profit": `${netProfit.toFixed(2)} ${vals.currency}`,
+                    "Profit Margin (%)": margin.toFixed(2) + "%",
+                    "Income Tax Payable": `${tax.toFixed(2)} ${vals.currency}`,
+                    "After Tax Income": `${(vals.income - tax).toFixed(2)} ${vals.currency}`,
+                    "Population Change": `${popChange > 0 ? '+' : ''}${popChange}`
+                };
+            }
         }
-        let subject = encodeURIComponent('JStL Software Download Request');
-        let body = encodeURIComponent('I would like to request the full JStL software package.\n\nName: \nPayment method: \n\nPlease send payment instructions and download link.');
-        window.location.href = 'mailto:amit.khanna.1082@gmail.com?cc=seliim.ahmed@gmail.com&subject=' + subject + '&body=' + body;
-        document.getElementById('requestMessage').innerHTML = '<span style="color:#7bef7b">✅ Email client opened. Send request to receive download link.</span>';
+    };
+
+    let currentValues = {};
+
+    function buildFields() {
+        let country = document.getElementById('countrySelect').value;
+        let config = countries[country];
+        let container = document.getElementById('dynamicFields');
+        container.innerHTML = '';
+        currentValues = { currency: config.currency };
+        
+        config.fields.forEach(field => {
+            let div = document.createElement('div');
+            div.className = 'field-group';
+            div.innerHTML = `
+                <label>${field.label}</label>
+                <input type="number" id="${field.id}" value="${field.default}" step="any">
+            `;
+            container.appendChild(div);
+            currentValues[field.id] = field.default;
+            let input = div.querySelector('input');
+            input.addEventListener('input', () => {
+                currentValues[field.id] = parseFloat(input.value) || 0;
+                updateResults();
+            });
+        });
+        updateResults();
+    }
+
+    function updateResults() {
+        let country = document.getElementById('countrySelect').value;
+        let config = countries[country];
+        let vals = { ...currentValues, currency: config.currency };
+        config.fields.forEach(field => {
+            let input = document.getElementById(field.id);
+            if(input) vals[field.id] = parseFloat(input.value) || 0;
+        });
+        let results = config.calculate(vals);
+        let resultDiv = document.getElementById('resultsDisplay');
+        resultDiv.innerHTML = '';
+        for(let [key, value] of Object.entries(results)) {
+            let item = document.createElement('div');
+            item.className = 'result-item';
+            item.innerHTML = `<strong>${key}:</strong> ${value}`;
+            resultDiv.appendChild(item);
+        }
+        window.currentResultData = results;
+        window.currentCountryData = { country: config.name, values: vals, results: results };
+    }
+
+    function fillDefaults() {
+        let country = document.getElementById('countrySelect').value;
+        let config = countries[country];
+        config.fields.forEach(field => {
+            let input = document.getElementById(field.id);
+            if(input) input.value = field.default;
+        });
+        buildFields();
+    }
+
+    function downloadJStL() {
+        let exportObj = {
+            name: "Make It JStL Spreadsheet",
+            version: "1.0",
+            theme: "dark blue",
+            country: window.currentCountryData?.country || "Unknown",
+            inputs: window.currentCountryData?.values || {},
+            results: window.currentResultData || {},
+            generatedAt: new Date().toISOString(),
+            license: "Perpetual | Full guarantee | Lifetime updates"
+        };
+        let jsonStr = JSON.stringify(exportObj, null, 2);
+        let blob = new Blob([jsonStr], {type: "application/json"});
+        let link = document.createElement('a');
+        let url = URL.createObjectURL(blob);
+        link.href = url;
+        let countryName = window.currentCountryData?.country || 'Scenario';
+        link.download = `Make_It_JStL_${countryName}_${Date.now()}.jstl`;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        URL.revokeObjectURL(url);
+        alert('✅ Make It JStL spreadsheet downloaded');
+    }
+
+    // Demo buttons - load specific scenarios
+    document.getElementById('profitDemoBtn').addEventListener('click', () => {
+        document.getElementById('countrySelect').value = 'bangladesh';
+        buildFields();
+        let buy = document.getElementById('buyPrice');
+        let sell = document.getElementById('sellPrice');
+        if(buy) buy.value = 500;
+        if(sell) sell.value = 750;
+        updateResults();
+    });
+    document.getElementById('taxDemoBtn').addEventListener('click', () => {
+        document.getElementById('countrySelect').value = 'canada';
+        buildFields();
+        let income = document.getElementById('income');
+        if(income) income.value = 80000;
+        updateResults();
+    });
+    document.getElementById('demographyDemoBtn').addEventListener('click', () => {
+        document.getElementById('countrySelect').value = 'india';
+        buildFields();
+        let births = document.getElementById('births');
+        let deaths = document.getElementById('deaths');
+        if(births) births.value = 25000;
+        if(deaths) deaths.value = 20000;
+        updateResults();
     });
 
-    // Social links (replace with your actual URLs)
-    document.getElementById('linkedinLink').addEventListener('click', function(e) {
-        e.preventDefault();
-        window.open('https://www.linkedin.com/in/amit-khanna', '_blank');
-    });
-    document.getElementById('facebookLink').addEventListener('click', function(e) {
-        e.preventDefault();
-        window.open('https://www.facebook.com/amit.khanna', '_blank');
-    });
+    document.getElementById('countrySelect').addEventListener('change', () => { buildFields(); });
+    document.getElementById('fillDefaultBtn').addEventListener('click', fillDefaults);
+    document.getElementById('downloadJStLBtn').addEventListener('click', downloadJStL);
+    
+    buildFields();
 </script>
 </body>
 </html>
