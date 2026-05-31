@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JStL Multi-Country Scenario</title>
+    <style>
+        *{box-sizing:border-box}
+        body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background:#0a1a2f;margin:0;padding:20px}
+        .container{max-width:1300px;margin:auto;background:#0d2b3e;border-radius:16px;box-shadow:0 8px 20px rgba(0,0,0,0.3);overflow:hidden}
+        .header{background:#071a2b;padding:20px;border-bottom:1px solid #1e4a6e}
+        .header h1{margin:0;color:#7abfef}
+        .header p{margin:8px 0 0;color:#6a9ec0}
+        .content{padding:20px}
+        .country-bar{background:#0a2a3a;padding:15px;border-radius:8px;margin-bottom:20px;display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+        .country-bar select{background:#1a3f55;color:white;border:1px solid #2a5a7a;padding:8px 16px;border-radius:6px;font-size:14px}
+        button{background:#1e5a7a;color:white;border:none;padding:8px 16px;border-radius:6px;cursor:pointer}
+        button:hover{background:#2a6f94}
+        .two-columns{display:flex;flex-wrap:wrap;gap:20px}
+        .fields-panel{flex:1;background:#0a2a3a;padding:20px;border-radius:8px}
+        .results-panel{flex:1;background:#0a2a3a;padding:20px;border-radius:8px}
+        .field-group{margin-bottom:15px}
+        .field-group label{display:block;color:#b8e0ff;margin-bottom:5px;font-weight:bold}
+        .field-group input{width:100%;background:#1a3f55;color:white;border:1px solid #2a5a7a;padding:8px;border-radius:6px}
+        .result-item{background:#0f2e44;padding:10px;margin-bottom:8px;border-radius:6px;color:#9fd3ff;font-family:monospace}
+        .result-item strong{color:#7abfef}
+        .footer{padding:12px 20px;background:#071a2b;border-top:1px solid #1e4a6e;font-size:12px;color:#6a9ec0;text-align:center}
+        h3{color:#7abfef;margin-top:0}
+        hr{border-color:#1e4a6e}
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <h1>🌍 JStL Multi-Country Scenario</h1>
+        <p>Select country → Fill fields → Automatic calculations</p>
+    </div>
+    <div class="content">
+        <div class="country-bar">
+            <label style="color:#b8e0ff;font-weight:bold">Select Scenario:</label>
+            <select id="countrySelect">
+                <option value="bangladesh">🇧🇩 Bangladesh</option>
+                <option value="canada">🇨🇦 Canada</option>
+                <option value="uk">🇬🇧 United Kingdom</option>
+                <option value="usa">🇺🇸 United States</option>
+                <option value="india">🇮🇳 India</option>
+            </select>
+            <button id="downloadBtn">⬇️ Download .jstl</button>
+            <button id="resetBtn">⟳ Reset to Defaults</button>
+        </div>
+        <div class="two-columns">
+            <div class="fields-panel">
+                <h3>📝 Input Fields</h3>
+                <div id="dynamicFields"></div>
+            </div>
+            <div class="results-panel">
+                <h3>📊 Calculated Results</h3>
+                <div id="resultsDisplay"></div>
+            </div>
+        </div>
+    </div>
+    <div class="footer">JStL Multi-Country | Real-time Excel logic per country</div>
+</div>
+
+<script>
+    const countries = {
+        bangladesh: {
+            name: "Bangladesh",
+            currency: "BDT",
+            fields: [
+                { label: "Annual Income", id: "income", default: 500000, step: 1000 },
+                { label: "VAT Rate (%)", id: "vatRate", default: 15, step: 1 },
+                { label: "Sales Tax Rate (%)", id: "salesTax", default: 5, step: 1 },
+                { label: "Buy Price", id: "buyPrice", default: 500, step: 100 },
+                { label: "Sell Price", id: "sellPrice", default: 750, step: 100 },
+                { label: "Births per Year", id: "births", default: 100, step: 10 },
+                { label: "Deaths per Year", id: "deaths", default: 120, step: 10 }
+            ],
+            calculate: (vals) => {
+                let gross = vals.sellPrice - vals.buyPrice;
+                let vat = vals.sellPrice * (vals.vatRate / 100);
+                let salesTax = vals.sellPrice * (vals.salesTax / 100);
+                let netProfit = gross - vat - salesTax;
+                let margin = vals.sellPrice ? (netProfit / vals.sellPrice) * 100 : 0;
+                let tax = 0;
+                if(vals.income > 250000) tax += (Math.min(vals.income, 400000) - 250000) * 0.10;
+                if(vals.income > 400000) tax += (vals.income - 400000) * 0.25;
+                let popChange = vals.births - vals.deaths;
+                return {
+                    "Gross Profit": `${gross.toFixed(2)} ${vals.currency}`,
+                    "VAT Amount": `${vat.toFixed(2)} ${vals.currency}`,
+                    "Sales Tax": `${salesTax.toFixed(2)} ${vals.currency}`,
+                    "Net Profit": `${netProfit.toFixed(2)} ${vals.currency}`,
+                    "Profit Margin (%)": margin.toFixed(2) + "%",
+                    "Income Tax Payable": `${tax.toFixed(2)} ${vals.currency}`,
+                    "After Tax Income": `${(vals.income - tax).toFixed(2)} ${vals.currency}`,
+                    "Population Change (Yearly)": `${popChange > 0 ? '+' : ''}${popChange}`
+                };
+            }
+        },
+        canada: {
+            name: "Canada",
+            currency: "CAD",
+            fields: [
+                { label: "Annual Income", id: "income", default: 60000, step: 1000 },
+                { label: "GST Rate (%)", id: "gstRate", default: 5, step: 1 },
+                { label: "PST Rate (%)", id: "pstRate", default: 8, step: 1 },
+                { label: "Buy Price", id: "buyPrice", default: 100, step: 10 },
+                { label: "Sell Price", id: "sellPrice", default: 180, step: 10 },
+                { label: "Births per Year", id: "births", default: 350, step: 10 },
+                { label: "Deaths per Year", id: "deaths", default: 300, step: 10 }
+            ],
+            calculate: (vals) => {
+                let gross = vals.sellPrice - vals.buyPrice;
+                let gst = vals.sellPrice * (vals.gstRate / 100);
+                let pst = vals.sellPrice * (vals.pstRate / 100);
+                let netProfit = gross - gst - pst;
+                let margin = vals.sellPrice ? (netProfit / vals.sellPrice) * 100 : 0;
+                let tax = 0;
+                if(vals.income > 53359) tax += (Math.min(vals.income, 106717) - 53359) * 0.205;
+                if(vals.income > 106717) tax += (Math.min(vals.income, 165430) - 106717) * 0.26;
+                if(vals.income > 165430) tax += (vals.income - 165430) * 0.29;
+                let popChange = vals.births - vals.deaths;
+                return {
+                    "Gross Profit": `${gross.toFixed(2)} ${vals.currency}`,
+                    "GST Amount": `${gst.toFixed(2)} ${vals.currency}`,
+                    "PST Amount": `${pst.toFixed(2)} ${vals.currency}`,
+                    "Net Profit": `${netProfit.toFixed(2)} ${vals.currency}`,
+                    "Profit Margin (%)": margin.toFixed(2) + "%",
+                    "Federal Tax Payable": `${tax.toFixed(2)} ${vals.currency}`,
+                    "After Tax Income": `${(vals.income - tax).toFixed(2)} ${vals.currency}`,
+                    "Population Change (Yearly)": `${popChange > 0 ? '+' : ''}${popChange}`
+                };
+            }
+        },
+        uk: {
+            name: "United Kingdom",
+            currency: "GBP",
+            fields: [
+                { label: "Annual Income", id: "income", default: 40000, step: 1000 },
+                { label: "VAT Rate (%)", id: "vatRate", default: 20, step: 1 },
+                { label: "Buy Price", id: "buyPrice", default: 50, step: 10 },
+                { label: "Sell Price", id: "sellPrice", default: 100, step: 10 },
+                { label: "Births per Year", id: "births", default: 700, step: 10 },
+                { label: "Deaths per Year", id: "deaths", default: 600, step: 10 }
+            ],
+            calculate: (vals) => {
+                let gross = vals.sellPrice - vals.buyPrice;
+                let vat = vals.sellPrice * (vals.vatRate / 100);
+                let netProfit = gross - vat;
+                let margin = vals.sellPrice ? (netProfit / vals.sellPrice) * 100 : 0;
+                let tax = 0;
+                if(vals.income > 12570) tax += (Math.min(vals.income, 50270) - 12570) * 0.20;
+                if(vals.income > 50270) tax += (vals.income - 50270) * 0.40;
+                let popChange = vals.births - vals.deaths;
+                return {
+                    "Gross Profit": `${gross.toFixed(2)} ${vals.currency}`,
+                    "VAT Amount": `${vat.toFixed(2)} ${vals.currency}`,
+                    "Net Profit": `${netProfit.toFixed(2)} ${vals.currency}`,
+                    "Profit Margin (%)": margin.toFixed(2) + "%",
+                    "Income Tax Payable": `${tax.toFixed(2)} ${vals.currency}`,
+                    "After Tax Income": `${(vals.income - tax).toFixed(2)} ${vals.currency}`,
+                    "Population Change (Yearly)": `${popChange > 0 ? '+' : ''}${popChange}`
+                };
+            }
+        },
+        usa: {
+            name: "United States",
+            currency: "USD",
+            fields: [
+                { label: "Annual Income", id: "income", default: 60000, step: 1000 },
+                { label: "Sales Tax Rate (%)", id: "salesTax", default: 7, step: 1 },
+                { label: "Buy Price", id: "buyPrice", default: 100, step: 10 },
+                { label: "Sell Price", id: "sellPrice", default: 200, step: 10 },
+                { label: "Births per Year", id: "births", default: 3500, step: 100 },
+                { label: "Deaths per Year", id: "deaths", default: 2800, step: 100 }
+            ],
+            calculate: (vals) => {
+                let gross = vals.sellPrice - vals.buyPrice;
+                let salesTax = vals.sellPrice * (vals.salesTax / 100);
+                let netProfit = gross - salesTax;
+                let margin = vals.sellPrice ? (netProfit / vals.sellPrice) * 100 : 0;
+                let tax = 0;
+                if(vals.income > 11600) tax += (Math.min(vals.income, 47150) - 11600) * 0.12;
+                if(vals.income > 47150) tax += (Math.min(vals.income, 100525) - 47150) * 0.22;
+                if(vals.income > 100525) tax += (vals.income - 100525) * 0.24;
+                let popChange = vals.births - vals.deaths;
+                return {
+                    "Gross Profit": `${gross.toFixed(2)} ${vals.currency}`,
+                    "Sales Tax Amount": `${salesTax.toFixed(2)} ${vals.currency}`,
+                    "Net Profit": `${netProfit.toFixed(2)} ${vals.currency}`,
+                    "Profit Margin (%)": margin.toFixed(2) + "%",
+                    "Federal Tax Payable": `${tax.toFixed(2)} ${vals.currency}`,
+                    "After Tax Income": `${(vals.income - tax).toFixed(2)} ${vals.currency}`,
+                    "Population Change (Yearly)": `${popChange > 0 ? '+' : ''}${popChange}`
+                };
+            }
+        },
+        india: {
+            name: "India",
+            currency: "INR",
+            fields: [
+                { label: "Annual Income", id: "income", default: 800000, step: 10000 },
+                { label: "GST Rate (%)", id: "gstRate", default: 18, step: 1 },
+                { label: "Buy Price", id: "buyPrice", default: 5000, step: 100 },
+                { label: "Sell Price", id: "sellPrice", default: 8000, step: 100 },
+                { label: "Births per Year", id: "births", default: 25000, step: 1000 },
+                { label: "Deaths per Year", id: "deaths", default: 20000, step: 1000 }
+            ],
+            calculate: (vals) => {
+                let gross = vals.sellPrice - vals.buyPrice;
+                let gst = vals.sellPrice * (vals.gstRate / 100);
+                let netProfit = gross - gst;
+                let margin = vals.sellPrice ? (netProfit / vals.sellPrice) * 100 : 0;
+                let tax = 0;
+                if(vals.income > 250000) tax += (Math.min(vals.income, 500000) - 250000) * 0.05;
+                if(vals.income > 500000) tax += (Math.min(vals.income, 1000000) - 500000) * 0.20;
+                if(vals.income > 1000000) tax += (vals.income - 1000000) * 0.30;
+                let popChange = vals.births - vals.deaths;
+                return {
+                    "Gross Profit": `${gross.toFixed(2)} ${vals.currency}`,
+                    "GST Amount": `${gst.toFixed(2)} ${vals.currency}`,
+                    "Net Profit": `${netProfit.toFixed(2)} ${vals.currency}`,
+                    "Profit Margin (%)": margin.toFixed(2) + "%",
+                    "Income Tax Payable": `${tax.toFixed(2)} ${vals.currency}`,
+                    "After Tax Income": `${(vals.income - tax).toFixed(2)} ${vals.currency}`,
+                    "Population Change (Yearly)": `${popChange > 0 ? '+' : ''}${popChange}`
+                };
+            }
+        }
+    };
+
+    let currentValues = {};
+
+    function buildFields() {
+        let country = document.getElementById('countrySelect').value;
+        let config = countries[country];
+        let container = document.getElementById('dynamicFields');
+        container.innerHTML = '';
+        currentValues = { currency: config.currency };
+        
+        config.fields.forEach(field => {
+            let div = document.createElement('div');
+            div.className = 'field-group';
+            div.innerHTML = `
+                <label>${field.label}</label>
+                <input type="number" id="${field.id}" value="${field.default}" step="${field.step || 'any'}">
+            `;
+            container.appendChild(div);
+            currentValues[field.id] = field.default;
+            let input = div.querySelector('input');
+            input.addEventListener('input', () => {
+                currentValues[field.id] = parseFloat(input.value) || 0;
+                updateResults();
+            });
+        });
+        updateResults();
+    }
+
+    function updateResults() {
+        let country = document.getElementById('countrySelect').value;
+        let config = countries[country];
+        let vals = { ...currentValues, currency: config.currency };
+        config.fields.forEach(field => {
+            let input = document.getElementById(field.id);
+            if(input) vals[field.id] = parseFloat(input.value) || 0;
+        });
+        let results = config.calculate(vals);
+        let resultDiv = document.getElementById('resultsDisplay');
+        resultDiv.innerHTML = '';
+        for(let [key, value] of Object.entries(results)) {
+            let item = document.createElement('div');
+            item.className = 'result-item';
+            item.innerHTML = `<strong>${key}:</strong> ${value}`;
+            resultDiv.appendChild(item);
+        }
+        window.currentResultData = results;
+        window.currentCountryData = { country: config.name, values: vals, results: results };
+    }
+
+    function resetToDefaults() {
+        let country = document.getElementById('countrySelect').value;
+        let config = countries[country];
+        config.fields.forEach(field => {
+            let input = document.getElementById(field.id);
+            if(input) input.value = field.default;
+        });
+        buildFields();
+    }
+
+    function downloadSpreadsheet() {
+        let exportObj = {
+            format: "JStL Multi-Country",
+            theme: "dark blue",
+            country: window.currentCountryData?.country || "Unknown",
+            inputs: window.currentCountryData?.values || {},
+            results: window.currentResultData || {},
+            generatedAt: new Date().toISOString()
+        };
+        let jsonStr = JSON.stringify(exportObj, null, 2);
+        let blob = new Blob([jsonStr], {type: "application/json"});
+        let link = document.createElement('a');
+        let url = URL.createObjectURL(blob);
+        link.href = url;
+        link.download = `JStL_${window.currentCountryData?.country || 'Scenario'}_${Date.now()}.jstl`;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        URL.revokeObjectURL(url);
+    }
+
+    document.getElementById('countrySelect').addEventListener('change', () => { buildFields(); });
+    document.getElementById('resetBtn').addEventListener('click', resetToDefaults);
+    document.getElementById('downloadBtn').addEventListener('click', downloadSpreadsheet);
+    
+    buildFields();
+</script>
+</body>
+</html>
