@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JStL Scenario Builder</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #0a1a2f;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: auto;
+            background: #0d2b3e;
+            border-radius: 16px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        .header {
+            background: #071a2b;
+            padding: 20px;
+            border-bottom: 1px solid #1e4a6e;
+        }
+        .header h1 {
+            margin: 0;
+            color: #7abfef;
+            font-size: 24px;
+        }
+        .header p {
+            margin: 8px 0 0;
+            color: #6a9ec0;
+            font-size: 14px;
+        }
+        .scenario-section {
+            padding: 20px;
+        }
+        .country-selector {
+            background: #0a2a3a;
+            padding: 16px;
+            border-radius: 8px;
+            margin-bottom: 24px;
+        }
+        .country-selector label {
+            color: #b8e0ff;
+            font-weight: bold;
+            margin-right: 12px;
+        }
+        select {
+            background: #1a3f55;
+            color: white;
+            border: 1px solid #2a5a7a;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+        .fields-area {
+            background: #0a2a3a;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 24px;
+        }
+        .fields-area h3 {
+            color: #7abfef;
+            margin-top: 0;
+            margin-bottom: 16px;
+        }
+        .field-group {
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .field-group label {
+            color: #b8e0ff;
+            width: 200px;
+            font-weight: bold;
+        }
+        .field-group input {
+            background: #1a3f55;
+            color: white;
+            border: 1px solid #2a5a7a;
+            padding: 8px 12px;
+            border-radius: 6px;
+            width: 200px;
+        }
+        .result-area {
+            background: #0a2a3a;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 24px;
+        }
+        .result-area h3 {
+            color: #7abfef;
+            margin-top: 0;
+        }
+        .result-item {
+            background: #0f2e44;
+            padding: 8px 12px;
+            margin-bottom: 8px;
+            border-radius: 6px;
+            color: #9fd3ff;
+            font-family: monospace;
+        }
+        .download-btn {
+            background: #1e5a7a;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            width: 100%;
+        }
+        .download-btn:hover {
+            background: #2a6f94;
+        }
+        .footer {
+            padding: 12px 20px;
+            background: #071a2b;
+            border-top: 1px solid #1e4a6e;
+            font-size: 12px;
+            color: #6a9ec0;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <h1>📊 JStL Scenario Builder</h1>
+        <p>Select a country → Fill required fields → Download printable spreadsheet</p>
+    </div>
+
+    <div class="scenario-section">
+        <div class="country-selector">
+            <label>🌍 Select Scenario / Country:</label>
+            <select id="countrySelect">
+                <option value="bangladesh">🇧🇩 Bangladesh</option>
+                <option value="canada">🇨🇦 Canada</option>
+            </select>
+        </div>
+
+        <div class="fields-area" id="fieldsArea">
+            <h3>📝 Required Fields</h3>
+            <div id="dynamicFields"></div>
+        </div>
+
+        <div class="result-area" id="resultArea">
+            <h3>📈 Calculated Results (Excel Logic)</h3>
+            <div id="resultDisplay"></div>
+        </div>
+
+        <button class="download-btn" id="downloadBtn">⬇️ Download JStL Spreadsheet (.jstl)</button>
+    </div>
+    <div class="footer">
+        JStL Format | Printable & Sharable | Excel look-alike logic | Dark blue theme
+    </div>
+</div>
+
+<script>
+    // Define scenarios for each country
+    const scenarios = {
+        bangladesh: {
+            name: "Bangladesh",
+            fields: [
+                { label: "Annual Income (BDT)", id: "income", default: 500000 },
+                { label: "VAT Rate (%)", id: "vatRate", default: 15 },
+                { label: "Sales Tax Rate (%)", id: "salesTaxRate", default: 5 },
+                { label: "Births per Year", id: "births", default: 100 },
+                { label: "Deaths per Year", id: "deaths", default: 120 },
+                { label: "Male Births", id: "maleBirths", default: 45 },
+                { label: "Female Births", id: "femaleBirths", default: 55 },
+                { label: "Male Deaths", id: "maleDeaths", default: 55 },
+                { label: "Female Deaths", id: "femaleDeaths", default: 45 }
+            ],
+            calculate: (values) => {
+                let income = values.income;
+                let vatRate = values.vatRate;
+                let salesTaxRate = values.salesTaxRate;
+                let buyPrice = 500;  // example buy price
+                let sellPrice = 750;
+                
+                // Profit logic
+                let grossProfit = sellPrice - buyPrice;
+                let vat = sellPrice * (vatRate / 100);
+                let salesTax = sellPrice * (salesTaxRate / 100);
+                let netProfit = grossProfit - vat - salesTax;
+                let profitMargin = (netProfit / sellPrice) * 100;
+                
+                // Tax logic (BDT slabs)
+                let tax = 0;
+                if (income > 250000) {
+                    let slab2 = Math.min(income, 400000) - 250000;
+                    tax += slab2 * 0.10;
+                }
+                if (income > 400000) {
+                    tax += (income - 400000) * 0.25;
+                }
+                let afterTaxIncome = income - tax;
+                
+                // Demography
+                let startPop = 1000;
+                let netChange = values.births - values.deaths;
+                let endingPop = startPop + netChange;
+                
+                return {
+                    "Gross Profit (USD)": grossProfit.toFixed(2),
+                    "VAT Amount": vat.toFixed(2),
+                    "Sales Tax": salesTax.toFixed(2),
+                    "Net Profit (USD)": netProfit.toFixed(2),
+                    "Profit Margin (%)": profitMargin.toFixed(2),
+                    "Income Tax Payable (BDT)": tax.toFixed(2),
+                    "Income After Tax (BDT)": afterTaxIncome.toFixed(2),
+                    "Population Change (Year 1)": `${netChange > 0 ? '+' : ''}${netChange}`,
+                    "Ending Population": endingPop.toFixed(0)
+                };
+            }
+        },
+        canada: {
+            name: "Canada",
+            fields: [
+                { label: "Annual Income (CAD)", id: "income", default: 60000 },
+                { label: "GST/HST Rate (%)", id: "gstRate", default: 13 },
+                { label: "PST Rate (%)", id: "pstRate", default: 8 },
+                { label: "Births per Year", id: "births", default: 350 },
+                { label: "Deaths per Year", id: "deaths", default: 300 },
+                { label: "Male Births", id: "maleBirths", default: 175 },
+                { label: "Female Births", id: "femaleBirths", default: 175 },
+                { label: "Male Deaths", id: "maleDeaths", default: 150 },
+                { label: "Female Deaths", id: "femaleDeaths", default: 150 }
+            ],
+            calculate: (values) => {
+                let income = values.income;
+                let gstRate = values.gstRate;
+                let pstRate = values.pstRate;
+                let buyPrice = 100;
+                let sellPrice = 180;
+                
+                let grossProfit = sellPrice - buyPrice;
+                let gst = sellPrice * (gstRate / 100);
+                let pst = sellPrice * (pstRate / 100);
+                let netProfit = grossProfit - gst - pst;
+                let profitMargin = (netProfit / sellPrice) * 100;
+                
+                // Canadian federal tax (simplified)
+                let tax = 0;
+                if (income > 53359) {
+                    tax += (Math.min(income, 106717) - 53359) * 0.205;
+                }
+                if (income > 106717) {
+                    tax += (Math.min(income, 165430) - 106717) * 0.26;
+                }
+                if (income > 165430) {
+                    tax += (income - 165430) * 0.29;
+                }
+                let afterTaxIncome = income - tax;
+                
+                let startPop = 38000000;
+                let netChange = values.births - values.deaths;
+                let endingPop = startPop + netChange;
+                
+                return {
+                    "Gross Profit (CAD)": grossProfit.toFixed(2),
+                    "GST/HST Amount": gst.toFixed(2),
+                    "PST Amount": pst.toFixed(2),
+                    "Net Profit (CAD)": netProfit.toFixed(2),
+                    "Profit Margin (%)": profitMargin.toFixed(2),
+                    "Federal Tax Payable (CAD)": tax.toFixed(2),
+                    "Income After Tax (CAD)": afterTaxIncome.toFixed(2),
+                    "Population Change (Year 1)": `${netChange > 0 ? '+' : ''}${netChange}`,
+                    "Ending Population": endingPop.toFixed(0)
+                };
+            }
+        }
+    };
+
+    let currentValues = {};
+
+    function buildFields() {
+        let country = document.getElementById('countrySelect').value;
+        let scenario = scenarios[country];
+        let container = document.getElementById('dynamicFields');
+        container.innerHTML = '';
+        currentValues = {};
+        
+        scenario.fields.forEach(field => {
+            let div = document.createElement('div');
+            div.className = 'field-group';
+            div.innerHTML = `
+                <label>${field.label}:</label>
+                <input type="number" id="${field.id}" value="${field.default}" step="any">
+            `;
+            container.appendChild(div);
+            currentValues[field.id] = field.default;
+            
+            let input = div.querySelector('input');
+            input.addEventListener('input', () => {
+                currentValues[field.id] = parseFloat(input.value) || 0;
+                updateResults();
+            });
+        });
+        updateResults();
+    }
+
+    function updateResults() {
+        let country = document.getElementById('countrySelect').value;
+        let scenario = scenarios[country];
+        let values = {};
+        scenario.fields.forEach(field => {
+            let input = document.getElementById(field.id);
+            values[field.id] = input ? (parseFloat(input.value) || 0) : 0;
+        });
+        let results = scenario.calculate(values);
+        let resultDiv = document.getElementById('resultDisplay');
+        resultDiv.innerHTML = '';
+        for (let [key, value] of Object.entries(results)) {
+            let item = document.createElement('div');
+            item.className = 'result-item';
+            item.innerHTML = `<strong>${key}:</strong> ${value}`;
+            resultDiv.appendChild(item);
+        }
+        // Store for download
+        window.currentResults = results;
+        window.currentScenario = scenario.name;
+        window.currentValues = values;
+    }
+
+    function downloadSpreadsheet() {
+        let exportData = {
+            format: "JStL Spreadsheet",
+            theme: "dark blue",
+            scenario: window.currentScenario,
+            inputs: window.currentValues,
+            calculatedResults: window.currentResults,
+            generatedAt: new Date().toISOString()
+        };
+        let jsonStr = JSON.stringify(exportData, null, 2);
+        let blob = new Blob([jsonStr], {type: "application/json"});
+        let link = document.createElement('a');
+        let url = URL.createObjectURL(blob);
+        link.href = url;
+        link.download = `JStL_${window.currentScenario}_${Date.now()}.jstl`;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        URL.revokeObjectURL(url);
+    }
+
+    document.getElementById('countrySelect').addEventListener('change', buildFields);
+    document.getElementById('downloadBtn').addEventListener('click', downloadSpreadsheet);
+    
+    buildFields();
+</script>
+</body>
+</html>
