@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JStL Scenario Builder v2</title>
+    <style>
+        *{box-sizing:border-box}
+        body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background:#0a1a2f;margin:0;padding:20px}
+        .container{max-width:1400px;margin:auto;background:#0d2b3e;border-radius:16px;box-shadow:0 8px 20px rgba(0,0,0,0.3);overflow:hidden}
+        .header{background:#071a2b;padding:20px;border-bottom:1px solid #1e4a6e}
+        .header h1{margin:0;color:#7abfef}
+        .header p{margin:8px 0 0;color:#6a9ec0}
+        .content{display:flex;flex-wrap:wrap;padding:20px;gap:20px}
+        .left{flex:1;min-width:300px;background:#0a2a3a;padding:20px;border-radius:8px}
+        .right{flex:1;min-width:300px;background:#0a2a3a;padding:20px;border-radius:8px}
+        select,input,button{background:#1a3f55;color:white;border:1px solid #2a5a7a;padding:8px 12px;border-radius:6px;width:100%;margin-top:8px}
+        button{background:#1e5a7a;cursor:pointer;width:auto}
+        button:hover{background:#2a6f94}
+        .field-group{margin-bottom:12px}
+        .field-group label{color:#b8e0ff;display:block;margin-bottom:4px}
+        .result-item{background:#0f2e44;padding:10px;margin-bottom:8px;border-radius:6px;color:#9fd3ff;font-family:monospace}
+        .download-btn{background:#1e5a7a;width:100%;padding:12px;font-weight:bold;margin-top:20px}
+        .footer{padding:12px 20px;background:#071a2b;border-top:1px solid #1e4a6e;font-size:12px;color:#6a9ec0;text-align:center}
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <h1>📊 JStL Scenario Builder v2</h1>
+        <p>Select country → Fill fields → Download spreadsheet</p>
+    </div>
+    <div class="content">
+        <div class="left">
+            <label>🌍 Select Country</label>
+            <select id="countrySelect">
+                <option value="bangladesh">🇧🇩 Bangladesh</option>
+                <option value="canada">🇨🇦 Canada</option>
+                <option value="india">🇮🇳 India</option>
+                <option value="uk">🇬🇧 United Kingdom</option>
+            </select>
+            <div id="fieldsContainer" style="margin-top:20px"></div>
+        </div>
+        <div class="right">
+            <h3 style="color:#7abfef;margin-top:0">📈 Results</h3>
+            <div id="resultsContainer"></div>
+            <button class="download-btn" id="downloadBtn">⬇️ Download JStL Spreadsheet</button>
+        </div>
+    </div>
+    <div class="footer">JStL Format | Printable | Excel logic | Dark blue</div>
+</div>
+<script>
+    const scenarios = {
+        bangladesh: {
+            name: "Bangladesh",
+            fields: [
+                {label:"Annual Income (BDT)", id:"income", default:500000},
+                {label:"VAT Rate (%)", id:"vat", default:15},
+                {label:"Sales Tax (%)", id:"salesTax", default:5},
+                {label:"Buy Price (BDT)", id:"buy", default:500},
+                {label:"Sell Price (BDT)", id:"sell", default:750},
+                {label:"Births per Year", id:"births", default:100},
+                {label:"Deaths per Year", id:"deaths", default:120}
+            ],
+            calc: (v) => {
+                let gross = v.sell - v.buy;
+                let vatAmt = v.sell * (v.vat/100);
+                let taxAmt = v.sell * (v.salesTax/100);
+                let netProfit = gross - vatAmt - taxAmt;
+                let margin = v.sell ? (netProfit/v.sell)*100 : 0;
+                let incomeTax = 0;
+                if(v.income > 250000) incomeTax += (Math.min(v.income,400000)-250000)*0.1;
+                if(v.income > 400000) incomeTax += (v.income-400000)*0.25;
+                let popChange = v.births - v.deaths;
+                return { "Gross Profit": gross.toFixed(2), "Net Profit": netProfit.toFixed(2), "Profit Margin %": margin.toFixed(2), "Income Tax": incomeTax.toFixed(2), "After Tax Income": (v.income-incomeTax).toFixed(2), "Population Change": popChange };
+            }
+        },
+        canada: {
+            name: "Canada",
+            fields: [
+                {label:"Annual Income (CAD)", id:"income", default:60000},
+                {label:"GST/HST (%)", id:"gst", default:13},
+                {label:"PST (%)", id:"pst", default:8},
+                {label:"Buy Price (CAD)", id:"buy", default:100},
+                {label:"Sell Price (CAD)", id:"sell", default:180},
+                {label:"Births per Year", id:"births", default:350},
+                {label:"Deaths per Year", id:"deaths", default:300}
+            ],
+            calc: (v) => {
+                let gross = v.sell - v.buy;
+                let gstAmt = v.sell * (v.gst/100);
+                let pstAmt = v.sell * (v.pst/100);
+                let netProfit = gross - gstAmt - pstAmt;
+                let margin = v.sell ? (netProfit/v.sell)*100 : 0;
+                let tax = 0;
+                if(v.income > 53359) tax += (Math.min(v.income,106717)-53359)*0.205;
+                if(v.income > 106717) tax += (Math.min(v.income,165430)-106717)*0.26;
+                if(v.income > 165430) tax += (v.income-165430)*0.29;
+                let popChange = v.births - v.deaths;
+                return { "Gross Profit": gross.toFixed(2), "Net Profit": netProfit.toFixed(2), "Profit Margin %": margin.toFixed(2), "Federal Tax": tax.toFixed(2), "After Tax Income": (v.income-tax).toFixed(2), "Population Change": popChange };
+            }
+        },
+        india: {
+            name: "India",
+            fields: [
+                {label:"Annual Income (INR)", id:"income", default:800000},
+                {label:"GST (%)", id:"gst", default:18},
+                {label:"Buy Price (INR)", id:"buy", default:1000},
+                {label:"Sell Price (INR)", id:"sell", default:1500},
+                {label:"Births per Year", id:"births", default:250},
+                {label:"Deaths per Year", id:"deaths", default:200}
+            ],
+            calc: (v) => {
+                let gross = v.sell - v.buy;
+                let gstAmt = v.sell * (v.gst/100);
+                let netProfit = gross - gstAmt;
+                let margin = v.sell ? (netProfit/v.sell)*100 : 0;
+                let tax = 0;
+                if(v.income > 250000) tax += (Math.min(v.income,500000)-250000)*0.05;
+                if(v.income > 500000) tax += (Math.min(v.income,1000000)-500000)*0.2;
+                if(v.income > 1000000) tax += (v.income-1000000)*0.3;
+                let popChange = v.births - v.deaths;
+                return { "Gross Profit": gross.toFixed(2), "Net Profit": netProfit.toFixed(2), "Profit Margin %": margin.toFixed(2), "Income Tax": tax.toFixed(2), "After Tax Income": (v.income-tax).toFixed(2), "Population Change": popChange };
+            }
+        },
+        uk: {
+            name: "UK",
+            fields: [
+                {label:"Annual Income (GBP)", id:"income", default:45000},
+                {label:"VAT (%)", id:"vat", default:20},
+                {label:"Buy Price (GBP)", id:"buy", default:50},
+                {label:"Sell Price (GBP)", id:"sell", default:90},
+                {label:"Births per Year", id:"births", default:700},
+                {label:"Deaths per Year", id:"deaths", default:650}
+            ],
+            calc: (v) => {
+                let gross = v.sell - v.buy;
+                let vatAmt = v.sell * (v.vat/100);
+                let netProfit = gross - vatAmt;
+                let margin = v.sell ? (netProfit/v.sell)*100 : 0;
+                let tax = 0;
+                if(v.income > 12570) tax += (Math.min(v.income,50270)-12570)*0.2;
+                if(v.income > 50270) tax += (Math.min(v.income,125140)-50270)*0.4;
+                if(v.income > 125140) tax += (v.income-125140)*0.45;
+                let popChange = v.births - v.deaths;
+                return { "Gross Profit": gross.toFixed(2), "Net Profit": netProfit.toFixed(2), "Profit Margin %": margin.toFixed(2), "Income Tax": tax.toFixed(2), "After Tax Income": (v.income-tax).toFixed(2), "Population Change": popChange };
+            }
+        }
+    };
+
+    let currentValues = {};
+
+    function buildFields() {
+        let country = document.getElementById('countrySelect').value;
+        let scenario = scenarios[country];
+        let container = document.getElementById('fieldsContainer');
+        container.innerHTML = '';
+        currentValues = {};
+        scenario.fields.forEach(field => {
+            let div = document.createElement('div');
+            div.className = 'field-group';
+            div.innerHTML = `<label>${field.label}</label><input type="number" id="field_${field.id}" value="${field.default}" step="any">`;
+            container.appendChild(div);
+            currentValues[field.id] = field.default;
+            let input = div.querySelector('input');
+            input.addEventListener('input', () => {
+                currentValues[field.id] = parseFloat(input.value) || 0;
+                updateResults();
+            });
+        });
+        updateResults();
+    }
+
+    function updateResults() {
+        let country = document.getElementById('countrySelect').value;
+        let scenario = scenarios[country];
+        let values = {};
+        scenario.fields.forEach(field => {
+            let input = document.getElementById(`field_${field.id}`);
+            values[field.id] = input ? (parseFloat(input.value) || 0) : 0;
+        });
+        let results = scenario.calc(values);
+        let container = document.getElementById('resultsContainer');
+        container.innerHTML = '';
+        for(let [key,val] of Object.entries(results)) {
+            let div = document.createElement('div');
+            div.className = 'result-item';
+            div.innerHTML = `<strong>${key}:</strong> ${val}`;
+            container.appendChild(div);
+        }
+        window.currentResults = results;
+        window.currentScenario = scenario.name;
+        window.currentInputs = values;
+    }
+
+    function downloadSpreadsheet() {
+        let exportData = {
+            format: "JStL Spreadsheet v2",
+            theme: "dark blue",
+            scenario: window.currentScenario,
+            inputs: window.currentInputs,
+            results: window.currentResults,
+            generatedAt: new Date().toISOString()
+        };
+        let jsonStr = JSON.stringify(exportData, null, 2);
+        let blob = new Blob([jsonStr], {type: "application/json"});
+        let link = document.createElement('a');
+        let url = URL.createObjectURL(blob);
+        link.href = url;
+        link.download = `JStL_${window.currentScenario}_${Date.now()}.jstl`;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        URL.revokeObjectURL(url);
+    }
+
+    document.getElementById('countrySelect').addEventListener('change', buildFields);
+    document.getElementById('downloadBtn').addEventListener('click', downloadSpreadsheet);
+    buildFields();
+</script>
+</body>
+</html>
