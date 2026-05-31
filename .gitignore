@@ -1,39 +1,46 @@
-# Excel files - Generated locally, not uploaded
-*.xlsx
-*.xls
-*.xlsm
-*.xlsb
+# JStL Project .gitignore
 
-# Python cache
+# Python
 __pycache__/
 *.pyc
 *.pyo
 *.pyd
+.Python
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
 
-# Virtual environments
-venv/
-env/
-ENV/
-.venv/
+# Excel temporary files
+~$*.xlsx
+~$*.xls
+*.xlk
 
-# IDE files
+# IDE
 .vscode/
 .idea/
 *.swp
 *.swo
 
-# OS files
+# OS generated
 .DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
 Thumbs.db
-Desktop.ini
 
-# Logs and backups
+# Logs
 *.log
-*.tmp
+
+# Local storage
+*.jstl
+!demo_calculator.xlsx
+!comoditi_demo.xlsx
+!my_data.xlsx
+
+# Backup files
 *.bak
 *.backup
-
-# Sensitive data
-*.key
-*.pem
-config.py
