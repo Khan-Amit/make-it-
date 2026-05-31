@@ -49,4 +49,11 @@ Perpetual, non-exclusive license included with purchase:
 - ✅ 12 months priority support
 - ✅ 7-day money-back guarantee
 
-## 📁 Repository Structure
+## 📁 Repository Structur
+
+***
+The final release date will be published in
+Facebook 
+LinkedIn in
+and WhatsApp and rocket notification if done early registration.
+thanks 
