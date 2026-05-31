@@ -1,76 +1,52 @@
-# make-it-
-Learning software # Software Writer · Marduk Guide
+# 📊 JStL Master Excel Calculator System
 
-**Author:** Seliim Ahmed  
-**Contact:** seliim.ahmed@gmail.com  
-**Version:** 1.0 (May 30, 2026)  
-**License:** SOVEREIGN PROPRIETARY – see LICENSE file
-this will be priced at
-USD 369.00 or equivalent local currency 
-for individual or personal use
-gor corporate use 
-mail us
-you Will get a digital lisence 
-and
-added to the list of licensed list 
-for user permission 
-send the email to 
-seliim.ahmed@gmail.com 
-thanks 🙏 🙏 🙏 
----
-
-## ⚠️ IMPORTANT Notice 
-# 📊 Master Excel Calculator System
-
-## Professional All-in-One Calculator Suite
-
-A complete Excel-based system with 10 professional calculators that auto-calculate. Perfect for business owners, analysts, accountants, teachers, and students.
-
----
+**10 Professional Calculators in 1 File | Browser-Based | No Excel Required**
 
 ## 🎯 Features
 
 | Calculator | Description |
 |------------|-------------|
-| 💰 Stock Inventory | Track value, cost & profit margins |
-| 👥 Demography | Population analysis by age/gender |
-| 📈 Statistics | Mean, median, sum calculations |
-| 💳 Finance | Income, expense & balance tracker |
-| 🧮 Math Solver | Addition, subtraction, multiplication, division |
-| 📐 Geometry | Area & volume of shapes |
-| 🎯 Percentage | Discounts, tax, tips, margins |
-| 📉 Trend Analysis | Sales growth & moving averages |
-| ⚖️ Unit Converter | Length, weight, time, temperature |
-| 🏠 INDEX Dashboard | Central navigation hub |
+| Stock Inventory | Profit & margin with VAT/sales tax |
+| Demography | Population trends & projections |
+| Statistics | Mean, median, mode, variance |
+| Finance | Income tax, loan EMI, compound interest |
+| Math Solver | Linear equations, quadratic solver |
+| Geometry | Area, volume, perimeter |
+| Percentage | Discount, markup, percentage change |
+| Trend Analysis | Charts & data visualization |
+| Unit Converter | Metric, imperial, currency |
+| INDEX Dashboard | Central hub for all tools |
 
----
+## 🚀 Live Demos
 
-## 🚀 Quick Start
+All demos run in your browser — no installation, no Excel needed:
 
-```bash
-# 1. Install required packages
-pip install pandas openpyxl
+- [Complete System](JSTL_Complete_System.html)
+- [Multi-Country Scenario](JSTL_Multi_Country.html)
+- [Scenario Builder](JSTL_Scenario_Builder.html)
+- [Data Storage](JSTL_Data_Storage.html)
 
-# 2. Run the script
-python master_calculator_final.py
+## 💳 Purchase
 
-# 3. Open the generated Excel file
-# 4. Click the 🏠 INDEX sheet to begin
+**Price: $199 USD**
 
-Plan Price
-Early Bird (First 50) $199 USD
-Regular Price $369 USD
-Commercial License Contact for pricing
+### Payment Methods
+- Credit/Debit Card (Visa, MasterCard, Amex)
+- Western Union
+- Crypto (BTC, USDT/TRC20, ETH)
+- Bank Transfer
 
-my_calculator.xlsx
-├── 🏠 INDEX        (Dashboard - Start here)
-├── 💰 STOCK        (Inventory calculator)
-├── 👥 DEMOGRAPHY   (Population stats)
-├── 📈 STATISTICS   (Data analysis)
-├── 💳 FINANCE      (Budget tracker)
-├── 🧮 MATH         (Basic operations)
-├── 📐 GEOMETRY     (Area & volume)
-├── 🎯 PERCENTAGE   (% calculator)
-├── 📉 TREND        (Sales analysis)
-└── ⚖️ UNIT         (Unit converter)
+### Contact for Payment
+- amit.khanna.1082@gmail.com
+- seliim.ahmed@gmail.com
 
+## 🎓 License
+
+Perpetual, non-exclusive license included with purchase:
+- ✅ Use on any personal or business device
+- ✅ Modify for internal use
+- ✅ Lifetime updates
+- ✅ 12 months priority support
+- ✅ 7-day money-back guarantee
+
+## 📁 Repository Structure
