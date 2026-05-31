@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JStL License Generator</title>
+    <style>
+        *{box-sizing:border-box}
+        body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background:#0a1a2f;margin:0;padding:20px}
+        .container{max-width:900px;margin:auto;background:#0d2b3e;border-radius:16px;box-shadow:0 8px 20px rgba(0,0,0,0.3);overflow:hidden}
+        .header{background:#071a2b;padding:20px;border-bottom:1px solid #1e4a6e}
+        .header h1{margin:0;color:#7abfef}
+        .content{padding:20px}
+        .form-group{background:#0a2a3a;padding:20px;border-radius:8px;margin-bottom:20px}
+        label{color:#b8e0ff;display:block;margin-top:12px}
+        input, select, button{background:#1a3f55;color:white;border:1px solid #2a5a7a;padding:8px 12px;border-radius:6px;width:100%;margin-top:5px}
+        button{background:#1e5a7a;cursor:pointer;width:auto;margin-top:15px}
+        button:hover{background:#2a6f94}
+        .certificate{background:#0a2a3a;padding:20px;border-radius:8px;font-family:monospace;white-space:pre;overflow-x:auto;color:#9fd3ff}
+        .footer{padding:12px 20px;background:#071a2b;border-top:1px solid #1e4a6e;font-size:12px;color:#6a9ec0;text-align:center}
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <h1>🎓 JStL License Generator</h1>
+        <p>Professional certificates for your customers</p>
+    </div>
+    <div class="content">
+        <div class="form-group">
+            <label>Full Name</label>
+            <input type="text" id="fullName" placeholder="Customer name">
+            <label>Software Version</label>
+            <select id="version">
+                <option>JStL Basic 1.0</option>
+                <option>JStL Pro 2.0</option>
+                <option>JStL Enterprise 3.0</option>
+            </select>
+            <label>License Duration</label>
+            <select id="duration">
+                <option>12 Months</option>
+                <option>Lifetime</option>
+                <option>6 Months</option>
+            </select>
+            <button id="generateBtn">Generate Certificate</button>
+        </div>
+        <div class="certificate" id="certificatePreview">
+            ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+            🎓 JStL LICENSE CERTIFICATE
+            ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+            Customer: [Your Name]
+            License ID: JStL-XXXXXXXXXX
+            Version: JStL Basic 1.0
+            Duration: 12 Months
+            Issue Date: 2026-05-31
+            Status: ACTIVE
+            Warranty: Included
+            Support: Priority Email
+            ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        </div>
+        <button id="downloadCertBtn" style="margin-top:15px;width:100%">⬇️ Download Certificate (.txt)</button>
+    </div>
+    <div class="footer">JStL License System | Unique ID per certificate</div>
+</div>
+<script>
+    function generateLicenseId() {
+        return 'JStL-' + Date.now().toString(36).toUpperCase() + '-' + Math.random().toString(36).substr(2, 4).toUpperCase();
+    }
+    function updateCertificate() {
+        let name = document.getElementById('fullName').value.trim();
+        if(!name) name = '[Customer Name]';
+        let version = document.getElementById('version').value;
+        let duration = document.getElementById('duration').value;
+        let licenseId = generateLicenseId();
+        let date = new Date().toLocaleDateString();
+        let cert = `━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n🎓 JStL LICENSE CERTIFICATE\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nCustomer: ${name}\nLicense ID: ${licenseId}\nVersion: ${version}\nDuration: ${duration}\nIssue Date: ${date}\nStatus: ACTIVE\nWarranty: Included\nSupport: Priority Email\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`;
+        document.getElementById('certificatePreview').innerText = cert;
+        window.currentCert = cert;
+    }
+    document.getElementById('generateBtn').addEventListener('click', updateCertificate);
+    document.getElementById('downloadCertBtn').addEventListener('click', () => {
+        let cert = window.currentCert || document.getElementById('certificatePreview').innerText;
+        let blob = new Blob([cert], {type: 'text/plain'});
+        let link = document.createElement('a');
+        let url = URL.createObjectURL(blob);
+        link.href = url;
+        link.download = `JStL_Certificate_${Date.now()}.txt`;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        URL.revokeObjectURL(url);
+    });
+    updateCertificate();
+</script>
+</body>
+</html>
